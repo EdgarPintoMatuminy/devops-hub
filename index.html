@@ -188,6 +188,7 @@
         .tag-wl { background-color: #dc2626; color: white; }
         .tag-sys { background-color: #2563eb; color: white; }
         .tag-oid { background-color: #7c3aed; color: white; }
+        .tag-vi { background-color: #059669; color: white; }
 
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
@@ -442,7 +443,7 @@
 </head>
 <body>
 
-    <!-- ===== NUEVO: Botón de Tema (Nocturno/Diurno) ===== -->
+    <!-- Botón de Tema (Nocturno/Diurno) -->
     <button class="theme-toggle" id="themeToggle" title="Cambiar tema (Nocturno/Diurno)">🌙</button>
 
     <!-- Sidebar Navigation -->
@@ -451,6 +452,7 @@
         <ul class="nav-links">
             <li><a href="#inicio">🏠 Inicio</a></li>
             <li><a href="#limpieza">🧹 Limpieza Automática</a></li>
+            <li><a href="#vi-view">📝 vi & view</a></li>
             <li><a href="#apache">🔴 Apache (Legacy/Batera)</a></li>
             <li><a href="#weblogic">🌐 WebLogic & Parcheo</a></li>
             <li><a href="#tomcat-nginx">⚡ Tomcat & Nginx</a></li>
@@ -539,6 +541,189 @@ chown -R webl11:weblogic /serapp/Vaplic/s87a
 # Nota: Tras cambiar permisos, relanzar el job del build si aplica.</code></pre>
             </div>
         </section>
+
+        <!-- ===== NUEVA SECCIÓN: vi & view ===== -->
+        <section id="vi-view" data-searchable="true">
+            <h2>📝 Uso Básico de vi y view</h2>
+            <p><span class="tag tag-vi">vi</span> es el editor de texto clásico de Unix/Linux. <span class="tag tag-vi">view</span> es su versión de <strong>solo lectura</strong> (ideal para revisar logs y configuraciones sin riesgo de modificarlas).</p>
+
+            <h3>🚀 Abrir Archivos</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this)">
+                            <option value="">⚫ Original</option>
+                            <option value="highlight-yellow">⚠️ Importante</option>
+                            <option value="highlight-green">✅ Seguro</option>
+                            <option value="highlight-red">🔴 Peligro</option>
+                            <option value="highlight-blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                    </div>
+                </div>
+                <pre><code># Abrir archivo con vi (edición)
+vi /etc/httpd/conf/httpd.conf
+
+# Abrir archivo con view (solo lectura, seguro)
+view /etc/httpd/conf/httpd.conf
+
+# Abrir en modo solo lectura con vi (alternativa)
+vi -R /etc/httpd/conf/httpd.conf
+
+# Abrir en modo "mejorado" (vim)
+vim /etc/httpd/conf/httpd.conf</code></pre>
+            </div>
+
+            <h3>⌨️ Modos de vi</h3>
+            <div class="template-box">
+                <strong>📌 Los 3 modos principales:</strong><br>
+                • <strong>Modo Normal (Comandos)</strong>: Modo por defecto al abrir vi. Permite navegar, borrar, copiar.<br>
+                • <strong>Modo Inserción</strong>: Para escribir texto. Se entra con <span class="inline-code">i</span>, <span class="inline-code">a</span> o <span class="inline-code">o</span>.<br>
+                • <strong>Modo Línea de Comandos</strong>: Para guardar, salir, buscar. Se entra con <span class="inline-code">:</span> (desde modo normal).
+            </div>
+
+            <h3>🔑 Comandos Esenciales</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>vi - Comandos Básicos</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this)">
+                            <option value="">⚫ Original</option>
+                            <option value="highlight-yellow">⚠️ Importante</option>
+                            <option value="highlight-green">✅ Seguro</option>
+                            <option value="highlight-red">🔴 Peligro</option>
+                            <option value="highlight-blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                    </div>
+                </div>
+                <pre><code># ENTRAR en modo inserción (desde modo normal)
+i          # Insertar antes del cursor
+a          # Insertar después del cursor
+o          # Insertar nueva línea debajo
+O          # Insertar nueva línea encima
+
+# VOLVER a modo normal (SIEMPRE pulsar primero)
+Esc        # Vuelve al modo normal desde cualquier modo
+
+# GUARDAR y SALIR (en modo línea de comandos, pulsar : primero)
+:w         # Guardar (write)
+:q         # Salir (quit)
+:wq        # Guardar y salir
+:x         # Guardar y salir (alternativa)
+:q!        # Salir SIN guardar (forzado)
+:w!        # Forzar guardado (si el archivo es de solo lectura y tienes permisos)
+
+# NAVEGACIÓN (en modo normal)
+h j k l    # Izquierda, abajo, arriba, derecha
+gg         # Ir al principio del archivo
+G          # Ir al final del archivo
+:n         # Ir a la línea número n (ej: :42)
+Ctrl+f     # Avanzar una página
+Ctrl+b     # Retroceder una página
+
+# BUSCAR (en modo normal)
+/patron    # Buscar hacia adelante (ej: /error)
+?patron    # Buscar hacia atrás
+n          # Ir a la siguiente coincidencia
+N          # Ir a la coincidencia anterior
+
+# BORRAR (en modo normal)
+x          # Borrar carácter bajo el cursor
+dd         # Borrar línea completa
+dw         # Borrar palabra
+d$         # Borrar hasta el final de la línea</code></pre>
+            </div>
+
+            <h3>🛡️ view - El vi Seguro</h3>
+            <div class="template-box warning">
+                <strong>⚠️ Regla de oro:</strong> Cuando solo necesitas <strong>leer</strong> un archivo de configuración o log, usa siempre <span class="inline-code">view</span> en lugar de <span class="inline-code">vi</span>. Así evitas modificaciones accidentales en producción.
+            </div>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this)">
+                            <option value="">⚫ Original</option>
+                            <option value="highlight-yellow">⚠️ Importante</option>
+                            <option value="highlight-green">✅ Seguro</option>
+                            <option value="highlight-red">🔴 Peligro</option>
+                            <option value="highlight-blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                    </div>
+                </div>
+                <pre><code># Revisar configuración de Apache de forma segura
+view /etc/httpd/conf/httpd.conf
+
+# Revisar logs con navegación cómoda
+view /var/log/httpd/error_log
+
+# Ver configuración de WebLogic sin riesgo
+view /dominio/E01_PRU_WL122_OSB_INTER/config/config.xml
+
+# Buscar dentro del archivo ya abierto con view
+/Error         # Busca "Error" hacia adelante
+/proxywl       # Busca configuración de proxy
+:n             # Ir a línea específica
+
+# Salir de view (igual que vi)
+:q</code></pre>
+            </div>
+
+            <h3>💡 Trucos Útiles para el Día a Día</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>vi/vim - Trucos</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this)">
+                            <option value="">⚫ Original</option>
+                            <option value="highlight-yellow">⚠️ Importante</option>
+                            <option value="highlight-green">✅ Seguro</option>
+                            <option value="highlight-red">🔴 Peligro</option>
+                            <option value="highlight-blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                    </div>
+                </div>
+                <pre><code># Mostrar números de línea (muy útil para referenciar)
+:set number
+:set nonumber        # Para quitarlos
+
+# Reemplazar texto en todo el archivo
+:%s/antiguo/nuevo/g           # En todo el archivo
+:%s/antiguo/nuevo/gc          # Con confirmación línea a línea
+:s/antiguo/nuevo/g            # Solo en la línea actual
+
+# Copiar y pegar (en modo normal)
+yy         # Copiar (yank) línea actual
+3yy        # Copiar 3 líneas
+p          # Pegar debajo
+P          # Pegar encima
+
+# Deshacer y rehacer
+u          # Deshacer último cambio
+Ctrl+r     # Rehacer
+
+# Abrir otro archivo desde dentro de vi
+:e /ruta/otro/archivo.conf
+
+# Dividir pantalla (vertical/horizontal)
+Ctrl+w v   # Dividir verticalmente
+Ctrl+w h   # Dividir horizontalmente
+Ctrl+w w   # Cambiar entre paneles</code></pre>
+            </div>
+
+            <h3>🆘 Salir de vi cuando estás "atrapado"</h3>
+            <div class="template-box warning">
+                <strong>🚨 Si no sabes cómo salir de vi:</strong><br>
+                1. Pulsa <span class="inline-code">Esc</span> (varias veces por si acaso)<br>
+                2. Escribe <span class="inline-code">:q!</span> y pulsa <span class="inline-code">Enter</span><br>
+                Esto te sacará sin guardar cambios, pase lo que pase.
+            </div>
+        </section>
+        <!-- ===== FIN NUEVA SECCIÓN ===== -->
 
         <section id="apache" data-searchable="true">
             <h2>🔴 Apache: Legacy vs Batera</h2>
@@ -1046,7 +1231,6 @@ manuel.perez@versia.com</code></pre>
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase().trim();
             
-            // Guardar término en localStorage
             localStorage.setItem('devopsSearch', e.target.value);
             
             const searchableElements = document.querySelectorAll('[data-searchable="true"]');
@@ -1110,15 +1294,12 @@ manuel.perez@versia.com</code></pre>
             });
         }
 
-        // Colorear bloques (con opción de quitar color)
         function highlightBlock(select) {
             const value = select.value;
             const pre = select.closest('.code-header').nextElementSibling;
             
-            // Quitar todos los colores
             pre.classList.remove('highlight-yellow', 'highlight-green', 'highlight-red', 'highlight-blue');
             
-            // Aplicar nuevo color si no es "Original"
             if (value) {
                 pre.classList.add(value);
             }
