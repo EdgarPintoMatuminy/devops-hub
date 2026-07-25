@@ -28,164 +28,225 @@
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
-            display: flex;
-        }
-        /* Sidebar Navigation */
-        .sidebar {
-            width: 280px;
-            background-color: var(--bg-secondary);
-            height: 100vh;
-            position: fixed;
-            overflow-y: auto;
-            padding: 20px;
-            border-right: 1px solid var(--bg-tertiary);
-        }
-        .sidebar h2 {
-            font-size: 1.2rem;
-            color: var(--accent);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .nav-links { list-style: none; }
-        .nav-links li { margin-bottom: 8px; }
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            display: block;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: all 0.2s;
-            font-size: 0.95rem;
-        }
-        .nav-links a:hover {
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-        .nav-links a.active {
-            background-color: var(--accent);
-            color: white;
-        }
-        /* Main Content */
-        .main-content {
-            margin-left: 280px;
-            padding: 40px;
-            width: 100%;
-            max-width: 1200px;
         }
         
-        /* Search Bar */
-        .search-container {
+        /* ===== CONTENIDO ORIGINAL (DASHBOARD) ===== */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 30px; }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .stat-item {
+            background: var(--bg-tertiary);
+            padding: 15px 25px;
+            border-radius: 8px;
+            min-width: 140px;
+        }
+        .stat-number { font-size: 1.8rem; font-weight: bold; color: var(--accent); }
+        .stat-label { color: var(--text-secondary); font-size: 0.9rem; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .tech-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .tech-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+        .tech-card h3 { font-size: 1.4rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .tech-card .subtitle { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 15px; }
+        .tech-card ul { list-style: none; margin-bottom: 15px; }
+        .tech-card ul li {
+            color: var(--text-secondary);
+            padding: 4px 0;
+            font-size: 0.9rem;
+        }
+        .tech-card ul li::before { content: "✓ "; color: var(--success); font-weight: bold; }
+        .tech-card a {
+            display: inline-block;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 0;
+            border-top: 1px solid var(--bg-tertiary);
+            width: 100%;
+            margin-top: 10px;
+        }
+        .tech-card a:hover { color: var(--accent-hover); }
+        
+        .section-title {
+            font-size: 2rem;
+            margin: 40px 0 20px;
+            color: var(--accent);
+            border-bottom: 2px solid var(--bg-tertiary);
+            padding-bottom: 10px;
+        }
+        
+        .scripts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .script-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .script-card h3 { color: var(--success); margin-bottom: 10px; }
+        .script-card p { color: var(--text-secondary); margin-bottom: 15px; }
+        .script-card ul { list-style: none; margin-bottom: 15px; }
+        .script-card ul li { color: var(--text-secondary); padding: 3px 0; font-size: 0.9rem; }
+        .script-card .code-example {
+            background: var(--code-bg);
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--warning);
+            margin-bottom: 10px;
+            overflow-x: auto;
+        }
+        .script-card a {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        .script-card a:hover { background: var(--accent-hover); }
+        
+        .docs-section {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+        .docs-section ul { list-style: none; }
+        .docs-section ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+        .docs-section ul li:last-child { border-bottom: none; }
+        .docs-section a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .docs-section a:hover { color: var(--accent-hover); text-decoration: underline; }
+        
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid var(--bg-tertiary);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        
+        /* ===== NUEVAS FUNCIONALIDADES AÑADIDAS ===== */
+        
+        /* Barra de búsqueda flotante */
+        .search-bar {
             position: sticky;
             top: 0;
-            background: var(--bg-primary);
-            padding: 20px 0;
             z-index: 100;
+            background: var(--bg-primary);
+            padding: 15px 20px;
             border-bottom: 2px solid var(--bg-tertiary);
-            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-        .search-box {
+        .search-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
             align-items: center;
         }
         .search-input {
             flex: 1;
+            min-width: 250px;
             padding: 12px 20px;
             background: var(--bg-secondary);
             border: 2px solid var(--bg-tertiary);
             border-radius: 8px;
             color: var(--text-primary);
             font-size: 1rem;
-            transition: border-color 0.3s;
         }
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
+        .search-input:focus { outline: none; border-color: var(--accent); }
         .search-stats {
             color: var(--text-secondary);
             font-size: 0.9rem;
-            margin-top: 5px;
+            min-width: 150px;
         }
+        .search-match {
+            background-color: #fbbf24;
+            color: #000;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .hidden-by-search { display: none !important; }
         
-        /* Highlight styles */
-        .highlight-yellow { background-color: var(--highlight-yellow); border-left: 3px solid var(--warning); padding: 2px 5px; border-radius: 3px; }
-        .highlight-green { background-color: var(--highlight-green); border-left: 3px solid var(--success); padding: 2px 5px; border-radius: 3px; }
-        .highlight-red { background-color: var(--highlight-red); border-left: 3px solid var(--danger); padding: 2px 5px; border-radius: 3px; }
-        .highlight-blue { background-color: var(--highlight-blue); border-left: 3px solid var(--accent); padding: 2px 5px; border-radius: 3px; }
-        .search-match { background-color: #fbbf24; color: #000; padding: 2px 4px; border-radius: 3px; font-weight: bold; }
-        
-        /* Controls */
-        .controls {
+        /* Botones de acción global */
+        .action-buttons {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
             flex-wrap: wrap;
         }
         .btn {
-            padding: 8px 16px;
+            padding: 10px 18px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.9rem;
+            font-weight: 500;
             transition: all 0.2s;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
         }
         .btn-primary { background: var(--accent); color: white; }
         .btn-primary:hover { background: var(--accent-hover); }
         .btn-success { background: var(--success); color: white; }
         .btn-success:hover { background: #059669; }
         .btn-warning { background: var(--warning); color: #000; }
+        .btn-warning:hover { background: #d97706; }
         .btn-danger { background: var(--danger); color: white; }
+        .btn-danger:hover { background: #dc2626; }
         
-        h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--text-primary); }
-        h2 { font-size: 1.8rem; margin-top: 40px; margin-bottom: 20px; color: var(--accent); border-bottom: 2px solid var(--bg-tertiary); padding-bottom: 10px; }
-        h3 { font-size: 1.3rem; margin-top: 25px; margin-bottom: 15px; color: var(--text-primary); }
-        p { margin-bottom: 15px; color: var(--text-secondary); }
-        
-        /* Code Blocks */
-        .code-block {
-            position: relative;
-            background-color: var(--code-bg);
-            border: 1px solid var(--bg-tertiary);
-            border-radius: 8px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-        .code-header {
-            background-color: var(--bg-tertiary);
-            padding: 8px 15px;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-        .highlight-selector {
-            padding: 4px 8px;
-            border-radius: 4px;
-            border: 1px solid var(--bg-secondary);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-        .copy-btn {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--bg-tertiary);
-            color: var(--text-primary);
-            padding: 4px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: background 0.2s;
-        }
-        .copy-btn:hover { background-color: var(--accent); }
+        /* Botón copiar por línea */
         .copy-line-btn {
             background: transparent;
             border: 1px solid var(--bg-tertiary);
@@ -198,131 +259,77 @@
             opacity: 0;
             transition: all 0.2s;
         }
-        .code-line:hover .copy-line-btn {
-            opacity: 1;
-        }
-        .copy-line-btn:hover {
-            background: var(--accent);
-            color: white;
-        }
-        pre {
-            padding: 15px;
-            overflow-x: auto;
-            font-family: "Consolas", "Monaco", "Courier New", monospace;
-            font-size: 0.9rem;
-            color: #e2e8f0;
-        }
+        .code-line:hover .copy-line-btn { opacity: 1; }
+        .copy-line-btn:hover { background: var(--accent); color: white; }
         .code-line {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 2px 0;
         }
-        .code-line:hover {
-            background: rgba(255,255,255,0.02);
-        }
-        code { font-family: inherit; }
-        .inline-code {
-            background-color: var(--bg-tertiary);
-            padding: 2px 6px;
+        .code-line:hover { background: rgba(255,255,255,0.02); }
+        
+        /* Selector de colores para destacar */
+        .highlight-selector {
+            padding: 4px 8px;
             border-radius: 4px;
-            font-family: monospace;
-            font-size: 0.9em;
-            color: var(--warning);
+            border: 1px solid var(--bg-tertiary);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 10px;
         }
-
-        /* Tables */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: var(--bg-secondary);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--bg-tertiary);
-        }
-        th { background-color: var(--bg-tertiary); color: var(--text-primary); }
-        tr:hover { background-color: rgba(255,255,255,0.02); }
-
-        /* Alerts / Templates */
-        .template-box {
-            background-color: rgba(59, 130, 246, 0.1);
-            border-left: 4px solid var(--accent);
-            padding: 15px;
-            border-radius: 0 8px 8px 0;
-            margin: 15px 0;
-        }
-        .template-box.warning {
-            background-color: rgba(245, 158, 11, 0.1);
-            border-left-color: var(--warning);
-        }
-        .template-box.success {
-            background-color: rgba(16, 185, 129, 0.1);
-            border-left-color: var(--success);
-        }
-
-        /* Tags */
-        .tag {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            margin-right: 5px;
-        }
-        .tag-apache { background-color: #d97706; color: white; }
-        .tag-wl { background-color: #dc2626; color: white; }
-        .tag-sys { background-color: #2563eb; color: white; }
-
-        /* Modal */
+        .highlight-yellow { background-color: var(--highlight-yellow) !important; border-left: 3px solid var(--warning); }
+        .highlight-green { background-color: var(--highlight-green) !important; border-left: 3px solid var(--success); }
+        .highlight-red { background-color: var(--highlight-red) !important; border-left: 3px solid var(--danger); }
+        .highlight-blue { background-color: var(--highlight-blue) !important; border-left: 3px solid var(--accent); }
+        
+        /* Modales */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0,0,0,0.8);
             z-index: 1000;
             justify-content: center;
             align-items: center;
         }
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
         .modal-content {
             background: var(--bg-secondary);
             padding: 30px;
             border-radius: 12px;
             max-width: 600px;
             width: 90%;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
+            border: 1px solid var(--bg-tertiary);
         }
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            border-bottom: 1px solid var(--bg-tertiary);
+            padding-bottom: 15px;
         }
         .modal-close {
             background: none;
             border: none;
             color: var(--text-secondary);
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
+            line-height: 1;
         }
-        .form-group {
-            margin-bottom: 15px;
-        }
+        .modal-close:hover { color: var(--danger); }
+        .form-group { margin-bottom: 15px; }
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             color: var(--text-primary);
+            font-weight: 500;
         }
         .form-group input,
         .form-group textarea,
@@ -335,225 +342,230 @@
             color: var(--text-primary);
             font-family: inherit;
         }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
         .form-group textarea {
             min-height: 100px;
             font-family: monospace;
+            resize: vertical;
         }
-
+        
+        /* Sección de contenido personalizado añadido */
+        .custom-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .custom-section h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .custom-item {
+            background: var(--bg-tertiary);
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+        .custom-item pre {
+            flex: 1;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--warning);
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .delete-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
-            .sidebar { width: 100%; height: auto; position: relative; }
-            .main-content { margin-left: 0; padding: 20px; }
-            body { flex-direction: column; }
+            .hero h1 { font-size: 2rem; }
+            .stats { gap: 15px; }
+            .stat-item { min-width: 120px; padding: 10px 15px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
-        <h2> DevOps Hub</h2>
-        <ul class="nav-links">
-            <li><a href="#inicio">🏠 Inicio</a></li>
-            <li><a href="#limpieza">🧹 Limpieza</a></li>
-            <li><a href="#apache">🔴 Apache</a></li>
-            <li><a href="#weblogic"> WebLogic</a></li>
-            <li><a href="#tomcat-nginx"> Tomcat/Nginx</a></li>
-            <li><a href="#plantillas">📋 Plantillas INC</a></li>
-            <li><a href="#referencias">📚 KBs y Contactos</a></li>
-        </ul>
-    </nav>
+    <!-- ===== BARRA DE BÚSQUEDA (NUEVO) ===== -->
+    <div class="search-bar">
+        <div class="search-wrapper">
+            <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar cualquier palabra... (ej: apache, ssl, weblogic, healthcheck)">
+            <span class="search-stats" id="searchStats"></span>
+        </div>
+    </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
+    <!-- ===== BOTONES DE ACCIÓN (NUEVO) ===== -->
+    <div class="action-buttons">
+        <button class="btn btn-primary" onclick="openModal('addCommandModal')">➕ Añadir Comando</button>
+        <button class="btn btn-success" onclick="openModal('addEmailModal')">📧 Añadir Email</button>
+        <button class="btn btn-warning" onclick="exportData()">💾 Exportar Mis Cambios</button>
+        <button class="btn btn-danger" onclick="clearCustomData()">🗑️ Borrar Personalizaciones</button>
+    </div>
+
+    <!-- ===== CONTENIDO ORIGINAL DEL DASHBOARD (SIN CAMBIOS) ===== -->
+    
+    <div class="hero">
+        <h1>🔧 DevOps Hub - Comandos Diarios</h1>
+        <p>Comandos diarios para Apache, Nginx, Tomcat y WebLogic</p>
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Comandos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Tecnologías</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2</div>
+                <div class="stat-label">Scripts</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Actualizaciones</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
         
-        <!-- Search Bar -->
-        <div class="search-container">
-            <div class="search-box">
-                <input type="text" id="searchInput" class="search-input" placeholder=" Buscar comandos, palabras clave... (ej: apache, ssl, restart)">
+        <!-- Tarjetas de Tecnologías -->
+        <div class="tech-grid">
+            <div class="tech-card" data-searchable="true">
+                <h3>🔴 Apache</h3>
+                <p class="subtitle">Servidor web y proxy reverso</p>
+                <ul>
+                    <li>Virtual hosts</li>
+                    <li>Modules (mod_proxy, SSL)</li>
+                    <li>Proxy reverso</li>
+                    <li>Troubleshooting</li>
+                </ul>
+                <a href="apache/APACHE.md">Ver Guía Completa →</a>
             </div>
-            <div class="search-stats" id="searchStats"></div>
+            
+            <div class="tech-card" data-searchable="true">
+                <h3>⚡ Nginx</h3>
+                <p class="subtitle">Load balancer y servidor web</p>
+                <ul>
+                    <li>Load balancing avanzado</li>
+                    <li>Proxy reverso</li>
+                    <li>SSL/TLS + HTTP/2</li>
+                    <li>Rate limiting</li>
+                </ul>
+                <a href="nginx/NGINX.md">Ver Guía Completa →</a>
+            </div>
+            
+            <div class="tech-card" data-searchable="true">
+                <h3>🐱 Tomcat</h3>
+                <p class="subtitle">Servidor Java de aplicaciones</p>
+                <ul>
+                    <li>Startup/shutdown</li>
+                    <li>Deployment de .war</li>
+                    <li>Configuración JVM</li>
+                    <li>Context.xml personalizado</li>
+                </ul>
+                <a href="tomcat/TOMCAT.md">Ver Guía Completa →</a>
+            </div>
+            
+            <div class="tech-card" data-searchable="true">
+                <h3>🌐 WebLogic</h3>
+                <p class="subtitle">Servidor de aplicaciones empresarial</p>
+                <ul>
+                    <li>Admin Server + Managed Servers</li>
+                    <li>WLST scripting</li>
+                    <li>Deployment automático</li>
+                    <li>Debugging avanzado</li>
+                </ul>
+                <a href="weblogic/WEBLOGIC.md">Ver Guía Completa →</a>
+            </div>
         </div>
 
-        <!-- Controls -->
-        <div class="controls">
-            <button class="btn btn-primary" onclick="openModal('addCommandModal')">➕ Añadir Comando</button>
-            <button class="btn btn-success" onclick="openModal('addEmailModal')">📧 Añadir Email</button>
-            <button class="btn btn-warning" onclick="exportData()"> Exportar Mis Cambios</button>
-            <button class="btn btn-danger" onclick="clearCustomData()">️ Borrar Personalizaciones</button>
+        <!-- Sección Scripts -->
+        <h2 class="section-title">🤖 Scripts Automáticos</h2>
+        <div class="scripts-grid">
+            <div class="script-card" data-searchable="true">
+                <h3>📊 healthcheck.sh</h3>
+                <p>Verificación automática de salud de todos los servicios</p>
+                <ul>
+                    <li>✓ Verifica Apache, Nginx, Tomcat, WebLogic</li>
+                    <li>✓ Valida configuraciones</li>
+                    <li>✓ Análisis de logs</li>
+                    <li>✓ Alertas por email/Slack</li>
+                </ul>
+                <div class="code-example">
+                    ./scripts/healthcheck.sh<br>
+                    ./scripts/healthcheck.sh --email admin@example.com
+                    <button class="copy-line-btn" onclick="copyLine(this)" style="opacity:1; margin-left:5px;">Copiar</button>
+                </div>
+                <a href="scripts/healthcheck.sh">Descargar Script</a>
+            </div>
+            
+            <div class="script-card" data-searchable="true">
+                <h3>🔄 restart_services.sh</h3>
+                <p>Reinicio seguro y controlado de servicios</p>
+                <ul>
+                    <li>✓ Reinicio graceful</li>
+                    <li>✓ Validación pre-reinicio</li>
+                    <li>✓ Limpieza de archivos temporales</li>
+                    <li>✓ Reinicio coordinado</li>
+                </ul>
+                <div class="code-example">
+                    ./scripts/restart_services.sh apache<br>
+                    ./scripts/restart_services.sh all
+                    <button class="copy-line-btn" onclick="copyLine(this)" style="opacity:1; margin-left:5px;">Copiar</button>
+                </div>
+                <a href="scripts/restart_services.sh">Descargar Script</a>
+            </div>
         </div>
 
-        <section id="inicio">
-            <h1>DevOps Hub - Comandos Diarios</h1>
-            <p>Hub centralizado de comandos, scripts, procedimientos y notas para la administración y troubleshooting de Apache, Nginx, Tomcat y WebLogic.</p>
-            <div class="template-box success">
-                <strong> Fecha del sistema:</strong> <span id="current-date-display"></span>
-            </div>
-        </section>
+        <!-- Sección Documentación -->
+        <h2 class="section-title">📚 Documentación</h2>
+        <div class="docs-section" data-searchable="true">
+            <ul>
+                <li><a href="README.md">📖 README Principal</a></li>
+                <li><a href="GITLAB_SETUP.md">🚀 Configurar GitLab</a></li>
+                <li><a href="QUICK_REFERENCE.md">⚡ Quick Reference</a></li>
+                <li><a href="INDEX.md">📑 Índice Completo</a></li>
+                <li><a href="devops-hub.tar.gz">📦 Descargar TODO</a></li>
+            </ul>
+        </div>
 
-        <section id="limpieza">
-            <h2>🧹 Limpieza de Temporales y Permisos</h2>
-            
-            <div class="code-block" data-searchable="true">
-                <div class="code-header">
-                    <span>Bash</span>
-                    <div>
-                        <select class="highlight-selector" onchange="highlightBlock(this, 'limpieza')">
-                            <option value="">🎨 Colorear...</option>
-                            <option value="highlight-yellow">️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
-                        </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
-                    </div>
-                </div>
-                <pre><div class="code-line">mv tmp tmp.<span class="fecha-auto"></span><button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">mv cache cache.<span class="fecha-auto"></span><button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">mv stage stage.<span class="fecha-auto"></span><button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">find . -name "*.tmp" -mtime +2 -exec ls -ltrh {} \;<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">find . -name "*.tmp" -mtime +2 -exec gzip {} \;<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
-            </div>
+        <!-- ===== SECCIÓN DE CONTENIDO PERSONALIZADO (NUEVO) ===== -->
+        <h2 class="section-title">⭐ Mi Contenido Personalizado</h2>
+        <div id="customCommandsContainer"></div>
+        <div id="customEmailsContainer"></div>
 
-            <h3>🔐 Corrección de Permisos</h3>
-            <div class="code-block" data-searchable="true">
-                <div class="code-header">
-                    <span>Bash</span>
-                    <div>
-                        <select class="highlight-selector" onchange="highlightBlock(this, 'permisos')">
-                            <option value="">🎨 Colorear...</option>
-                            <option value="highlight-yellow">⚠️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
-                        </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
-                    </div>
-                </div>
-                <pre><div class="code-line">chown -R web:apache2 /web/aplic/r01/*<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">chown -R webl11:weblogic /serapp/Vaplic/s87a<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
-            </div>
-        </section>
+    </div>
 
-        <section id="apache">
-            <h2> Apache: Legacy vs Batera</h2>
-            
-            <h3>🏢 Rutas de Configuración</h3>
-            <table data-searchable="true">
-                <tr><th>Componente</th><th>APACHE LEGACY</th><th>APACHE BATERA</th></tr>
-                <tr><td>Config. Principal</td><td><span class="inline-code">/opt/apache2/conf_osasuna_nas/httpd.conf</span></td><td><span class="inline-code">/etc/httpd/conf/httpd.conf</span></td></tr>
-                <tr><td>Virtual Hosts</td><td><span class="inline-code">/opt/apache2/conf_osasuna_nas/{8080|8443}/virtualhosts/</span></td><td><span class="inline-code">/etc/httpd/conf.d/</span></td></tr>
-                <tr><td>Proxy WebLogic</td><td><span class="inline-code">/opt/apache2/conf_common/proxywl/</span></td><td><span class="inline-code">/etc/httpd/conf.extra/proxies/</span></td></tr>
-                <tr><td>Arranque</td><td><span class="inline-code">/etc/init.d/apache_osasuna</span></td><td><span class="inline-code">systemctl httpd</span></td></tr>
-            </table>
+    <footer>
+        <p>🔧 DevOps Hub | Comandos Diarios para DevOps/SysAdmin</p>
+        <p>Tecnologías: Apache • Nginx • Tomcat • WebLogic</p>
+        <p>Última actualización: Julio 2026</p>
+        <p>Repositorio: <a href="https://github.com/EdgarPintoMatuminy/devops-hub" target="_blank">github.com/EdgarPintoMatuminy/devops-hub</a></p>
+    </footer>
 
-            <h3>🔍 Comandos de Búsqueda</h3>
-            <div class="code-block" data-searchable="true">
-                <div class="code-header">
-                    <span>Bash</span>
-                    <div>
-                        <select class="highlight-selector" onchange="highlightBlock(this, 'apache-search')">
-                            <option value="">🎨 Colorear...</option>
-                            <option value="highlight-yellow">⚠️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
-                        </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
-                    </div>
-                </div>
-                <pre><div class="code-line">grep -Ril "www.gizarte.eus" --include="*.conf" .<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">grep -Ril "o76" --include="*proxy*" .<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">ls -la /opt/apache2/conf_common/proxywl/<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">cat /opt/apache2/conf_common/proxywl/proxywl.ab11.inc<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
-            </div>
-        </section>
-
-        <section id="weblogic">
-            <h2>🌐 WebLogic: Administración y Parcheo</h2>
-            
-            <h3>️ Procedimiento de Parcheo (SPBAT)</h3>
-            <div class="template-box warning">
-                <strong>⚠️ Pre-requisito:</strong> Asegurar espacio en <span class="inline-code">/oracle</span>
-            </div>
-            <div class="code-block" data-searchable="true">
-                <div class="code-header">
-                    <span>Bash</span>
-                    <div>
-                        <select class="highlight-selector" onchange="highlightBlock(this, 'parcheo')">
-                            <option value="">🎨 Colorear...</option>
-                            <option value="highlight-yellow">⚠️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
-                        </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
-                    </div>
-                </div>
-                <pre><div class="code-line">df -h /oracle/<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">/dominio/E01_PRU_WL122_OSB_INTER/custombin/stopAdminServer.sh<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">sudo systemctl stop nodemanager<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">/oracle/fmw/OPatch/opatch rollback -id 32720458 -silent<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">./spbat.sh -phase apply -oracle_home /oracle/fmw<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
-            </div>
-        </section>
-
-        <section id="tomcat-nginx">
-            <h2>⚡ Tomcat & Nginx</h2>
-            
-            <h3>🐱 Tomcat</h3>
-            <div class="code-block" data-searchable="true">
-                <div class="code-header">
-                    <span>Bash</span>
-                    <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
-                </div>
-                <pre><div class="code-line">$CATALINA_HOME/bin/startup.sh<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">$CATALINA_HOME/bin/shutdown.sh<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">jstat -gc $(jps -l | grep Catalina | awk '{print $1}')<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
-            </div>
-
-            <h3>🌿 Nginx</h3>
-            <div class="code-block" data-searchable="true">
-                <div class="code-header">
-                    <span>Bash</span>
-                    <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
-                </div>
-                <pre><div class="code-line">nginx -t<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">systemctl reload nginx<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">grep -r "upstream" /etc/nginx/<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
-            </div>
-        </section>
-
-        <section id="plantillas">
-            <h2>📋 Plantillas de Resolución de INCs</h2>
-
-            <div class="template-box success" data-searchable="true">
-                <strong>✅ URL carga correctamente</strong><br>
-                <em>"Se ha revisado la infraestructura y se ha verificado que el Apache, las instancias de WebLogic y la aplicación se encuentran en buen estado. La URL carga correctamente."</em>
-            </div>
-
-            <div class="template-box" data-searchable="true">
-                <strong>🔄 Reinicio de Servicios</strong><br>
-                <em>"La alerta fue recuperada tras realizar un reinicio ordenado de las instancias que consumían mayor cantidad de memoria."</em>
-            </div>
-        </section>
-
-        <section id="referencias">
-            <h2>📚 Referencias: KBs y Contactos</h2>
-            
-            <h3>👥 Contacto del Equipo</h3>
-            <div id="emailsList">
-            <div class="code-block" data-searchable="true">
-                <div class="code-header">
-                    <span>Emails</span>
-                    <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
-                </div>
-                <pre><div class="code-line">inaki.hernandez@versia.com<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">yeray.martin@versia.com<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">edgarpinto.matuminy@versia.com<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
-            </div>
-            </div>
-
-            <h3>📖 Knowledge Base</h3>
-            <table data-searchable="true">
-                <tr><th>Categoría</th><th>KB ID</th><th>Descripción</th></tr>
-                <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0024300</td><td>Procedimiento de Parcheo</td></tr>
-                <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0019033</td><td>Reinicio de WebLogic</td></tr>
-                <tr><td><span class="tag tag-apache">Apache</span></td><td>KB0021528</td><td>Pasarelas</td></tr>
-                <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0024345</td><td>Metaposta</td></tr>
-            </table>
-        </section>
-
-        <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--bg-tertiary); color: var(--text-secondary); text-align: center; font-size: 0.9rem;">
-            <p> DevOps Hub | Comandos Diarios para DevOps/SysAdmin</p>
-            <p>Última actualización: Julio 2026</p>
-        </footer>
-
-    </main>
-
-    <!-- Modal Añadir Comando -->
+    <!-- ===== MODAL: AÑADIR COMANDO (NUEVO) ===== -->
     <div id="addCommandModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -575,14 +587,14 @@
                 </select>
             </div>
             <div class="form-group">
-                <label>Comando:</label>
-                <textarea id="cmdContent" placeholder="systemctl restart apache2"></textarea>
+                <label>Comando (una línea por comando):</label>
+                <textarea id="cmdContent" placeholder="systemctl restart apache2&#10;apachectl configtest"></textarea>
             </div>
-            <button class="btn btn-success" onclick="addCommand()">Guardar Comando</button>
+            <button class="btn btn-success" onclick="addCommand()">💾 Guardar Comando</button>
         </div>
     </div>
 
-    <!-- Modal Añadir Email -->
+    <!-- ===== MODAL: AÑADIR EMAIL (NUEVO) ===== -->
     <div id="addEmailModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -594,187 +606,265 @@
                 <input type="email" id="newEmail" placeholder="nombre@empresa.com">
             </div>
             <div class="form-group">
-                <label>Nombre:</label>
+                <label>Nombre (opcional):</label>
                 <input type="text" id="emailName" placeholder="Nombre Completo">
             </div>
-            <button class="btn btn-success" onclick="addEmail()">Guardar Email</button>
+            <button class="btn btn-success" onclick="addEmail()">💾 Guardar Email</button>
         </div>
     </div>
 
     <script>
-        // Fecha Automática
-        document.addEventListener('DOMContentLoaded', () => {
-            const now = new Date();
-            const yyyy = now.getFullYear();
-            const mm = String(now.getMonth() + 1).padStart(2, '0');
-            const dd = String(now.getDate()).padStart(2, '0');
-            const dateStr = `${yyyy}${mm}${dd}`;
-            
-            document.getElementById('current-date-display').textContent = `${dd}/${mm}/${yyyy}`;
-            document.querySelectorAll('.fecha-auto').forEach(el => {
-                el.textContent = dateStr;
-            });
-
-            loadCustomData();
-        });
-
-        // Buscador
+        // ===== BUSCADOR EN TIEMPO REAL =====
         const searchInput = document.getElementById('searchInput');
+        const searchStats = document.getElementById('searchStats');
+        const searchableElements = document.querySelectorAll('[data-searchable="true"]');
+
         searchInput.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            const searchableElements = document.querySelectorAll('[data-searchable="true"]');
+            const term = e.target.value.toLowerCase().trim();
             let matchCount = 0;
 
+            // Primero restaurar todo el contenido original
+            searchableElements.forEach(el => {
+                el.classList.remove('hidden-by-search');
+                // Quitar highlights anteriores
+                el.querySelectorAll('.search-match').forEach(match => {
+                    const parent = match.parentNode;
+                    parent.replaceChild(document.createTextNode(match.textContent), match);
+                    parent.normalize();
+                });
+            });
+
+            if (term === '') {
+                searchStats.textContent = '';
+                return;
+            }
+
+            // Buscar y resaltar
             searchableElements.forEach(el => {
                 const text = el.textContent.toLowerCase();
-                if (term === '') {
-                    el.style.display = '';
-                    el.innerHTML = el.innerHTML.replace(/<span class="search-match">|<\/span>/g, '');
-                } else if (text.includes(term)) {
-                    el.style.display = '';
-                    highlightText(el, term);
+                if (text.includes(term)) {
                     matchCount++;
+                    highlightInElement(el, term);
                 } else {
-                    el.style.display = 'none';
+                    el.classList.add('hidden-by-search');
                 }
             });
 
-            document.getElementById('searchStats').textContent = 
-                term ? `${matchCount} resultado(s) encontrado(s)` : '';
+            searchStats.textContent = `${matchCount} resultado(s)`;
         });
 
-        function highlightText(element, term) {
+        function highlightInElement(element, term) {
             const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
-            const nodes = [];
-            while(walker.nextNode()) nodes.push(walker.currentNode);
+            const textNodes = [];
+            while (walker.nextNode()) {
+                // No resaltar dentro de botones
+                if (!walker.currentNode.parentElement.classList.contains('copy-line-btn') &&
+                    !walker.currentNode.parentElement.classList.contains('search-match')) {
+                    textNodes.push(walker.currentNode);
+                }
+            }
             
-            nodes.forEach(node => {
+            textNodes.forEach(node => {
                 if (node.textContent.toLowerCase().includes(term)) {
-                    const span = document.createElement('span');
-                    span.className = 'search-match';
-                    const regex = new RegExp(`(${term})`, 'gi');
+                    const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
                     const parts = node.textContent.split(regex);
-                    parts.forEach(part => {
-                        if (part.toLowerCase() === term) {
-                            const match = span.cloneNode();
-                            match.textContent = part;
-                            node.parentNode.insertBefore(match, node);
-                        } else {
-                            node.parentNode.insertBefore(document.createTextNode(part), node);
-                        }
-                    });
-                    node.parentNode.removeChild(node);
+                    if (parts.length > 1) {
+                        const fragment = document.createDocumentFragment();
+                        parts.forEach(part => {
+                            if (part.toLowerCase() === term.toLowerCase()) {
+                                const span = document.createElement('span');
+                                span.className = 'search-match';
+                                span.textContent = part;
+                                fragment.appendChild(span);
+                            } else {
+                                fragment.appendChild(document.createTextNode(part));
+                            }
+                        });
+                        node.parentNode.replaceChild(fragment, node);
+                    }
                 }
             });
         }
 
-        // Copiar funcionalidad
-        function copyCode(button) {
-            const codeBlock = button.closest('.code-block').querySelector('pre');
-            const text = codeBlock.innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                const original = button.textContent;
-                button.textContent = '¡Copiado!';
-                setTimeout(() => button.textContent = original, 2000);
-            });
-        }
-
+        // ===== COPIAR LÍNEA =====
         function copyLine(button) {
-            const line = button.parentElement;
-            const text = line.childNodes[0].textContent.trim();
+            const container = button.parentElement;
+            // Obtener solo el texto, sin el botón
+            let text = '';
+            container.childNodes.forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    text += node.textContent;
+                } else if (node.nodeType === Node.ELEMENT_NODE && !node.classList.contains('copy-line-btn')) {
+                    text += node.textContent;
+                }
+            });
+            text = text.trim();
+            
             navigator.clipboard.writeText(text).then(() => {
                 const original = button.textContent;
-                button.textContent = '✓';
-                setTimeout(() => button.textContent = original, 2000);
+                button.textContent = '✓ Copiado';
+                button.style.background = 'var(--success)';
+                button.style.color = 'white';
+                button.style.opacity = '1';
+                setTimeout(() => {
+                    button.textContent = original;
+                    button.style.background = '';
+                    button.style.color = '';
+                }, 1500);
             });
         }
 
-        // Resaltar/Colorear
-        function highlightBlock(select, id) {
-            const value = select.value;
-            if (!value) return;
-            
-            const block = select.closest('.code-block').querySelector('pre');
-            block.classList.remove('highlight-yellow', 'highlight-green', 'highlight-red', 'highlight-blue');
-            block.classList.add(value);
-            
-            localStorage.setItem(`highlight_${id}`, value);
-        }
+        // ===== COLOREAR / DESTACAR BLOQUES =====
+        // (Se aplica a los code-example de los scripts)
+        document.querySelectorAll('.code-example').forEach((block, idx) => {
+            const selector = document.createElement('select');
+            selector.className = 'highlight-selector';
+            selector.innerHTML = `
+                <option value="">🎨 Colorear...</option>
+                <option value="highlight-yellow">⚠️ Importante</option>
+                <option value="highlight-green">✅ Seguro</option>
+                <option value="highlight-red">🔴 Peligro</option>
+                <option value="highlight-blue">ℹ️ Info</option>
+            `;
+            selector.addEventListener('change', (e) => {
+                block.classList.remove('highlight-yellow', 'highlight-green', 'highlight-red', 'highlight-blue');
+                if (e.target.value) block.classList.add(e.target.value);
+                localStorage.setItem(`highlight_block_${idx}`, e.target.value);
+            });
+            // Restaurar color guardado
+            const saved = localStorage.getItem(`highlight_block_${idx}`);
+            if (saved) {
+                block.classList.add(saved);
+                selector.value = saved;
+            }
+            block.appendChild(selector);
+        });
 
-        // Modales
-        function openModal(id) {
-            document.getElementById(id).classList.add('active');
-        }
+        // ===== MODALES =====
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        window.onclick = (e) => {
+            if (e.target.classList.contains('modal')) e.target.classList.remove('active');
+        };
 
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('active');
-        }
-
-        // Añadir Comando
+        // ===== AÑADIR COMANDO =====
         function addCommand() {
-            const title = document.getElementById('cmdTitle').value;
+            const title = document.getElementById('cmdTitle').value.trim();
             const category = document.getElementById('cmdCategory').value;
-            const content = document.getElementById('cmdContent').value;
+            const content = document.getElementById('cmdContent').value.trim();
             
             if (!title || !content) {
-                alert('Por favor completa todos los campos');
+                alert('⚠️ Por favor completa título y comando');
                 return;
             }
 
-            const customCommands = JSON.parse(localStorage.getItem('customCommands') || '[]');
-            customCommands.push({ title, category, content, date: new Date().toISOString() });
-            localStorage.setItem('customCommands', JSON.stringify(customCommands));
+            const commands = JSON.parse(localStorage.getItem('customCommands') || '[]');
+            commands.push({ 
+                id: Date.now(),
+                title, 
+                category, 
+                content, 
+                date: new Date().toISOString() 
+            });
+            localStorage.setItem('customCommands', JSON.stringify(commands));
             
             closeModal('addCommandModal');
-            alert('Comando guardado correctamente');
-            loadCustomData();
+            document.getElementById('cmdTitle').value = '';
+            document.getElementById('cmdContent').value = '';
+            alert('✅ Comando guardado correctamente');
+            renderCustomContent();
         }
 
-        // Añadir Email
+        // ===== AÑADIR EMAIL =====
         function addEmail() {
-            const email = document.getElementById('newEmail').value;
-            const name = document.getElementById('emailName').value;
+            const email = document.getElementById('newEmail').value.trim();
+            const name = document.getElementById('emailName').value.trim();
             
             if (!email) {
-                alert('Por favor introduce un email');
+                alert('⚠️ Por favor introduce un email');
                 return;
             }
 
-            const customEmails = JSON.parse(localStorage.getItem('customEmails') || '[]');
-            customEmails.push({ email, name, date: new Date().toISOString() });
-            localStorage.setItem('customEmails', JSON.stringify(customEmails));
+            const emails = JSON.parse(localStorage.getItem('customEmails') || '[]');
+            emails.push({ 
+                id: Date.now(),
+                email, 
+                name, 
+                date: new Date().toISOString() 
+            });
+            localStorage.setItem('customEmails', JSON.stringify(emails));
             
             closeModal('addEmailModal');
-            alert('Email guardado correctamente');
-            loadCustomData();
+            document.getElementById('newEmail').value = '';
+            document.getElementById('emailName').value = '';
+            alert('✅ Email guardado correctamente');
+            renderCustomContent();
         }
 
-        // Cargar datos personalizados
-        function loadCustomData() {
-            // Cargar emails personalizados
-            const customEmails = JSON.parse(localStorage.getItem('customEmails') || '[]');
-            if (customEmails.length > 0) {
-                const container = document.getElementById('emailsList');
-                customEmails.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'code-block';
-                    div.innerHTML = `
-                        <div class="code-header">
-                            <span>${item.name || 'Email'}</span>
-                            <button class="copy-btn" onclick="navigator.clipboard.writeText('${item.email}')">Copiar</button>
-                        </div>
-                        <pre>${item.email}</pre>
-                    `;
-                    container.appendChild(div);
-                });
+        // ===== ELIMINAR ITEM =====
+        function deleteItem(type, id) {
+            if (!confirm('¿Eliminar este elemento?')) return;
+            const items = JSON.parse(localStorage.getItem(type) || '[]');
+            const filtered = items.filter(item => item.id !== id);
+            localStorage.setItem(type, JSON.stringify(filtered));
+            renderCustomContent();
+        }
+
+        // ===== RENDERIZAR CONTENIDO PERSONALIZADO =====
+        function renderCustomContent() {
+            // Comandos
+            const commands = JSON.parse(localStorage.getItem('customCommands') || '[]');
+            const cmdContainer = document.getElementById('customCommandsContainer');
+            if (commands.length > 0) {
+                cmdContainer.innerHTML = `
+                    <div class="custom-section" data-searchable="true">
+                        <h3>⭐ Mis Comandos Personalizados</h3>
+                        ${commands.map(cmd => `
+                            <div class="custom-item">
+                                <div style="flex:1;">
+                                    <strong style="color:var(--accent);">${cmd.title}</strong>
+                                    <span style="color:var(--text-secondary); font-size:0.8rem;"> [${cmd.category}]</span>
+                                    <pre>${cmd.content}</pre>
+                                </div>
+                                <button class="copy-line-btn" onclick="navigator.clipboard.writeText(\`${cmd.content.replace(/`/g, '\\`')}\`).then(()=>{this.textContent='✓'; setTimeout(()=>this.textContent='Copiar',1500);})" style="opacity:1;">Copiar</button>
+                                <button class="delete-btn" onclick="deleteItem('customCommands', ${cmd.id})">🗑️</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                cmdContainer.innerHTML = '';
+            }
+
+            // Emails
+            const emails = JSON.parse(localStorage.getItem('customEmails') || '[]');
+            const emailContainer = document.getElementById('customEmailsContainer');
+            if (emails.length > 0) {
+                emailContainer.innerHTML = `
+                    <div class="custom-section" data-searchable="true">
+                        <h3>📧 Mis Emails Personalizados</h3>
+                        ${emails.map(em => `
+                            <div class="custom-item">
+                                <div style="flex:1;">
+                                    <strong style="color:var(--accent);">${em.name || 'Contacto'}</strong>
+                                    <pre style="color:var(--success);">${em.email}</pre>
+                                </div>
+                                <button class="copy-line-btn" onclick="navigator.clipboard.writeText('${em.email}').then(()=>{this.textContent='✓'; setTimeout(()=>this.textContent='Copiar',1500);})" style="opacity:1;">Copiar</button>
+                                <button class="delete-btn" onclick="deleteItem('customEmails', ${em.id})">🗑️</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                emailContainer.innerHTML = '';
             }
         }
 
-        // Exportar datos
+        // ===== EXPORTAR DATOS =====
         function exportData() {
             const data = {
-                customCommands: localStorage.getItem('customCommands'),
-                customEmails: localStorage.getItem('customEmails'),
+                customCommands: JSON.parse(localStorage.getItem('customCommands') || '[]'),
+                customEmails: JSON.parse(localStorage.getItem('customEmails') || '[]'),
                 exportDate: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -783,23 +873,23 @@
             a.href = url;
             a.download = `devops-hub-backup-${new Date().toISOString().split('T')[0]}.json`;
             a.click();
+            URL.revokeObjectURL(url);
         }
 
-        // Borrar personalizaciones
+        // ===== BORRAR PERSONALIZACIONES =====
         function clearCustomData() {
-            if (confirm('¿Estás seguro de borrar todos tus comandos y emails personalizados?')) {
+            if (confirm('⚠️ ¿Estás seguro de borrar TODOS tus comandos y emails personalizados? Esta acción no se puede deshacer.')) {
                 localStorage.removeItem('customCommands');
                 localStorage.removeItem('customEmails');
-                location.reload();
+                renderCustomContent();
+                alert('✅ Personalizaciones borradas');
             }
         }
 
-        // Cerrar modal al hacer click fuera
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
-            }
-        }
+        // ===== INICIALIZACIÓN =====
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCustomContent();
+        });
     </script>
 </body>
 </html>
