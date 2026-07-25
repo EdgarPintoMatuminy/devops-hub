@@ -453,7 +453,7 @@
             <li><a href="#inicio">🏠 Inicio</a></li>
             <li><a href="#limpieza">🧹 Limpieza Automática</a></li>
             <li><a href="#vi-view">📝 vi & view</a></li>
-            <li><a href="#apache">🔴 Apache (Legacy/Batera)</a></li>
+            <li><a href="#apache">🔴 Apache (Legacy/Batera/Platea)</a></li>
             <li><a href="#weblogic">🌐 WebLogic & Parcheo</a></li>
             <li><a href="#tomcat-nginx">⚡ Tomcat & Nginx</a></li>
             <li><a href="#plantillas">📋 Plantillas de INC</a></li>
@@ -542,7 +542,7 @@ chown -R webl11:weblogic /serapp/Vaplic/s87a
             </div>
         </section>
 
-        <!-- ===== NUEVA SECCIÓN: vi & view ===== -->
+        <!-- ===== SECCIÓN: vi & view ===== -->
         <section id="vi-view" data-searchable="true">
             <h2>📝 Uso Básico de vi y view</h2>
             <p><span class="tag tag-vi">vi</span> es el editor de texto clásico de Unix/Linux. <span class="tag tag-vi">view</span> es su versión de <strong>solo lectura</strong> (ideal para revisar logs y configuraciones sin riesgo de modificarlas).</p>
@@ -723,10 +723,9 @@ Ctrl+w w   # Cambiar entre paneles</code></pre>
                 Esto te sacará sin guardar cambios, pase lo que pase.
             </div>
         </section>
-        <!-- ===== FIN NUEVA SECCIÓN ===== -->
 
         <section id="apache" data-searchable="true">
-            <h2>🔴 Apache: Legacy vs Batera</h2>
+            <h2>🔴 Apache: Legacy vs Batera vs Platea</h2>
             
             <h3>🏢 Rutas de Configuración</h3>
             <table>
@@ -737,6 +736,12 @@ Ctrl+w w   # Cambiar entre paneles</code></pre>
                 <tr><td>Certificados SSL</td><td><span class="inline-code">/opt/apache2/conf_common/certificates/</span></td><td><span class="inline-code">/etc/pki/tls/certs/</span></td></tr>
                 <tr><td>Arranque</td><td><span class="inline-code">/etc/init.d/apache_osasuna</span></td><td><span class="inline-code">systemctl httpd</span></td></tr>
                 <tr><td>Logs</td><td><span class="inline-code">/log/apache2/ejlp295/conf_osasuna_nas/</span></td><td><span class="inline-code">/var/log/httpd/</span></td></tr>
+            </table>
+
+            <h3>🏢 APACHE PLATEA_WEB</h3>
+            <table>
+                <tr><th>Componente</th><th>Ruta</th></tr>
+                <tr><td>Proxies</td><td><span class="inline-code">/web/conf_apache/conf_r01/euskadi_env/proxies/ac17a.proxy</span></td></tr>
             </table>
 
             <h3>🔍 Comandos de Búsqueda y Verificación</h3>
@@ -766,7 +771,10 @@ grep -E "WebLogicCluster|WebLogicHost" /opt/apache2/conf_common/proxywl/proxywl.
 
 # Verificar Balanceador Batera (mod_proxy_balancer)
 grep -r "balancer://" /etc/httpd/conf.d/
-cat /etc/httpd/conf.extra/proxies/pre.batera.eustat.eus_8443_balancer.conf</code></pre>
+cat /etc/httpd/conf.extra/proxies/pre.batera.eustat.eus_8443_balancer.conf
+
+# Verificar Proxy Platea_web
+view /web/conf_apache/conf_r01/euskadi_env/proxies/ac17a.proxy</code></pre>
             </div>
 
             <h3>🔐 Verificación de Certificados SSL</h3>
@@ -1006,12 +1014,19 @@ manuel.perez@versia.com</code></pre>
                 <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0022038</td><td>BO / Metaposta desde zBat</td></tr>
                 <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0011082</td><td>KB general de IIS</td></tr>
                 <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0011476</td><td>Alarma IIS / Host alarma IIS</td></tr>
+                <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0024184</td><td>COMANDO_TOP</td></tr>
                 <tr><td><span class="tag tag-sys">Builds</span></td><td>KB0010708</td><td>Errores de AnthillPro Build</td></tr>
                 <tr><td><span class="tag tag-sys">Builds</span></td><td>KB0020556</td><td>Cancelar Builds de AnthillPro</td></tr>
                 <tr><td><span class="tag tag-sys">FS</span></td><td>KB0012024</td><td>Llenado FS</td></tr>
                 <tr><td><span class="tag tag-sys">FS</span></td><td>KB0024385</td><td>LOG --> FS</td></tr>
+                <tr><td><span class="tag tag-sys">FS</span></td><td>KB0018329</td><td>JFR --> FS</td></tr>
+                <tr><td><span class="tag tag-sys">FS</span></td><td>KB0024361</td><td>PRODLOG --> FS</td></tr>
+                <tr><td><span class="tag tag-sys">FS</span></td><td>KB0024393</td><td>HEAPDUMPS --> FS</td></tr>
+                <tr><td><span class="tag tag-sys">FS</span></td><td>KB0024365</td><td>Llenado FS DATOS FS</td></tr>
                 <tr><td><span class="tag tag-sys">JMS</span></td><td>KB0021573</td><td>Reinyectar Mensaje JMS</td></tr>
                 <tr><td><span class="tag tag-sys">Red</span></td><td>KB0024779</td><td>Problemas con XLNETs (ver KB0024644)</td></tr>
+                <tr><td><span class="tag tag-sys">Red</span></td><td>KB0024644</td><td>Actuación ante problemas con XLNETs</td></tr>
+                <tr><td><span class="tag tag-sys">Red</span></td><td>KB0023982</td><td>SE_ATM_01_HOST_Alertas_Event_Manager</td></tr>
                 <tr><td><span class="tag tag-sys">DS</span></td><td>EJLP373</td><td>datasource:connectionInUse.active</td></tr>
             </table>
         </section>
