@@ -5,377 +5,504 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔧 DevOps Hub - Comandos Diarios</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --code-bg: #0d1117;
         }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            display: flex;
         }
-
-        .container {
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-secondary);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            padding: 20px;
+            border-right: 1px solid var(--bg-tertiary);
+        }
+        .sidebar h2 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-links { list-style: none; }
+        .nav-links li { margin-bottom: 8px; }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+        .nav-links a:hover {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        .nav-links a.active {
+            background-color: var(--accent);
+            color: white;
+        }
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 40px;
+            width: 100%;
             max-width: 1200px;
-            margin: 0 auto;
         }
-
-        header {
-            text-align: center;
-            color: white;
-            margin-bottom: 50px;
-        }
-
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        header p {
-            font-size: 1.1em;
-            opacity: 0.95;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-
-        .card h2 {
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            color: #667eea;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .card ul {
-            list-style: none;
-            margin-bottom: 20px;
-        }
-
-        .card li {
-            color: #666;
-            padding: 5px 0;
-            padding-left: 25px;
-            position: relative;
-        }
-
-        .card li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #667eea;
-            font-weight: bold;
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1em;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
-        }
-
-        .scripts-section {
-            background: white;
-            border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .scripts-section h2 {
-            font-size: 2em;
-            margin-bottom: 30px;
-            color: #667eea;
-        }
-
-        .script-item {
-            margin-bottom: 30px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .script-item:last-child {
-            border-bottom: none;
-        }
-
-        .script-item h3 {
-            color: #764ba2;
-            margin-bottom: 10px;
-        }
-
-        .script-item p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
+        h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--text-primary); }
+        h2 { font-size: 1.8rem; margin-top: 40px; margin-bottom: 20px; color: var(--accent); border-bottom: 2px solid var(--bg-tertiary); padding-bottom: 10px; }
+        h3 { font-size: 1.3rem; margin-top: 25px; margin-bottom: 15px; color: var(--text-primary); }
+        p { margin-bottom: 15px; color: var(--text-secondary); }
+        
+        /* Code Blocks */
         .code-block {
-            background: #f5f5f5;
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-            font-size: 0.9em;
-            color: #333;
+            position: relative;
+            background-color: var(--code-bg);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow: hidden;
         }
-
-        .quick-links {
-            background: white;
-            border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .quick-links h2 {
-            font-size: 2em;
-            margin-bottom: 30px;
-            color: #667eea;
-        }
-
-        .links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .link-btn {
+        .code-header {
+            background-color: var(--bg-tertiary);
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 20px;
-            background: #f5f5f5;
-            border-radius: 8px;
-            text-decoration: none;
-            color: #667eea;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
         }
-
-        .link-btn:hover {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
+        .copy-btn {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            color: var(--text-primary);
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
         }
-
-        footer {
-            text-align: center;
-            color: white;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.2);
+        .copy-btn:hover { background-color: var(--accent); }
+        pre {
+            padding: 15px;
+            overflow-x: auto;
+            font-family: "Consolas", "Monaco", "Courier New", monospace;
+            font-size: 0.9rem;
+            color: #e2e8f0;
         }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
-        }
-
-        .stat {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .stat .number {
-            font-size: 2em;
-            color: #667eea;
-            font-weight: bold;
-        }
-
-        .stat .label {
-            color: #666;
+        code { font-family: inherit; }
+        .inline-code {
+            background-color: var(--bg-tertiary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
             font-size: 0.9em;
+            color: var(--warning);
         }
 
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+        th { background-color: var(--bg-tertiary); color: var(--text-primary); }
+        tr:hover { background-color: rgba(255,255,255,0.02); }
+
+        /* Alerts / Templates */
+        .template-box {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        .template-box.warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left-color: var(--warning);
+        }
+        .template-box.success {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left-color: var(--success);
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .tag-apache { background-color: #d97706; color: white; }
+        .tag-wl { background-color: #dc2626; color: white; }
+        .tag-sys { background-color: #2563eb; color: white; }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8em;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .scripts-section, .quick-links {
-                padding: 20px;
-            }
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .main-content { margin-left: 0; padding: 20px; }
+            body { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🔧 DevOps Hub</h1>
-            <p>Comandos diarios para Apache, Nginx, Tomcat y WebLogic</p>
-        </header>
 
-        <div class="stats">
-            <div class="stat">
-                <div class="number">150+</div>
-                <div class="label">Comandos</div>
-            </div>
-            <div class="stat">
-                <div class="number">4</div>
-                <div class="label">Tecnologías</div>
-            </div>
-            <div class="stat">
-                <div class="number">2</div>
-                <div class="label">Scripts</div>
-            </div>
-            <div class="stat">
-                <div class="number">∞</div>
-                <div class="label">Actualizaciones</div>
-            </div>
-        </div>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <h2>🔧 DevOps Hub</h2>
+        <ul class="nav-links">
+            <li><a href="#inicio">🏠 Inicio</a></li>
+            <li><a href="#limpieza">🧹 Limpieza Automática</a></li>
+            <li><a href="#apache">🔴 Apache (Legacy/Batera)</a></li>
+            <li><a href="#weblogic">🌐 WebLogic & Parcheo</a></li>
+            <li><a href="#tomcat-nginx">⚡ Tomcat & Nginx</a></li>
+            <li><a href="#plantillas">📋 Plantillas de INC</a></li>
+            <li><a href="#referencias">📚 KBs y Contactos</a></li>
+        </ul>
+    </nav>
 
-        <div class="grid">
-            <div class="card">
-                <h2>🔴 Apache</h2>
-                <p>Servidor web y proxy reverso</p>
-                <ul>
-                    <li>Virtual hosts</li>
-                    <li>Modules (mod_proxy, SSL)</li>
-                    <li>Proxy reverso</li>
-                    <li>Troubleshooting</li>
-                </ul>
-                <a href="apache/APACHE.md" class="btn">Ver Guía Completa</a>
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <section id="inicio">
+            <h1>DevOps Hub - Comandos Diarios</h1>
+            <p>Hub centralizado de comandos, scripts, procedimientos y notas para la administración y troubleshooting de Apache, Nginx, Tomcat y WebLogic.</p>
+            <div class="template-box success">
+                <strong>📅 Fecha del sistema detectada:</strong> <span id="current-date-display"></span> (Los comandos de limpieza usan esta fecha automáticamente).
             </div>
+        </section>
 
-            <div class="card">
-                <h2>⚡ Nginx</h2>
-                <p>Load balancer y servidor web</p>
-                <ul>
-                    <li>Load balancing avanzado</li>
-                    <li>Proxy reverso</li>
-                    <li>SSL/TLS + HTTP/2</li>
-                    <li>Rate limiting</li>
-                </ul>
-                <a href="nginx/NGINX.md" class="btn">Ver Guía Completa</a>
-            </div>
-
-            <div class="card">
-                <h2>🐱 Tomcat</h2>
-                <p>Servidor Java de aplicaciones</p>
-                <ul>
-                    <li>Startup/shutdown</li>
-                    <li>Deployment de .war</li>
-                    <li>Configuración JVM</li>
-                    <li>Context.xml personalizado</li>
-                </ul>
-                <a href="tomcat/TOMCAT.md" class="btn">Ver Guía Completa</a>
-            </div>
-
-            <div class="card">
-                <h2>🌐 WebLogic</h2>
-                <p>Servidor de aplicaciones empresarial</p>
-                <ul>
-                    <li>Admin Server + Managed Servers</li>
-                    <li>WLST scripting</li>
-                    <li>Deployment automático</li>
-                    <li>Debugging avanzado</li>
-                </ul>
-                <a href="weblogic/WEBLOGIC.md" class="btn">Ver Guía Completa</a>
-            </div>
-        </div>
-
-        <div class="scripts-section">
-            <h2>🤖 Scripts Automáticos</h2>
+        <section id="limpieza">
+            <h2>🧹 Limpieza de Temporales y Permisos</h2>
+            <p>El formato de fecha <span class="inline-code">AAAAMMDD</span> se genera automáticamente con JavaScript según el día de hoy.</p>
             
-            <div class="script-item">
-                <h3>📊 healthcheck.sh</h3>
-                <p>Verificación automática de salud de todos los servicios</p>
-                <ul style="list-style: none; padding-left: 0; margin-bottom: 15px;">
-                    <li style="padding-left: 25px;">✓ Verifica Apache, Nginx, Tomcat, WebLogic</li>
-                    <li style="padding-left: 25px;">✓ Valida configuraciones</li>
-                    <li style="padding-left: 25px;">✓ Análisis de logs</li>
-                    <li style="padding-left: 25px;">✓ Alertas por email/Slack</li>
-                </ul>
-                <div class="code-block">./scripts/healthcheck.sh<br>./scripts/healthcheck.sh --email admin@example.com</div>
-                <a href="scripts/healthcheck.sh" class="btn" style="margin-top: 15px;">Descargar Script</a>
+            <div class="code-block">
+                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+                <pre><code># Renombrado de temporales con fecha automática
+mv tmp tmp.<span class="fecha-auto"></span>
+mv cache cache.<span class="fecha-auto"></span>
+mv stage stage.<span class="fecha-auto"></span>
+
+# Búsqueda y compresión de archivos .tmp antiguos (+2 días)
+find . -name "*.tmp" -mtime +2 -exec ls -ltrh {} \;
+find . -name "*.tmp" -mtime +2 -exec gzip {} \;</code></pre>
             </div>
 
-            <div class="script-item">
-                <h3>🔄 restart_services.sh</h3>
-                <p>Reinicio seguro y controlado de servicios</p>
-                <ul style="list-style: none; padding-left: 0; margin-bottom: 15px;">
-                    <li style="padding-left: 25px;">✓ Reinicio graceful</li>
-                    <li style="padding-left: 25px;">✓ Validación pre-reinicio</li>
-                    <li style="padding-left: 25px;">✓ Limpieza de archivos temporales</li>
-                    <li style="padding-left: 25px;">✓ Reinicio coordinado</li>
-                </ul>
-                <div class="code-block">./scripts/restart_services.sh apache<br>./scripts/restart_services.sh all</div>
-                <a href="scripts/restart_services.sh" class="btn" style="margin-top: 15px;">Descargar Script</a>
-            </div>
-        </div>
+            <h3>🔐 Corrección de Permisos (Best Practices)</h3>
+            <div class="code-block">
+                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+                <pre><code># Entorno Apache
+chown -R web:apache2 /web/aplic/r01/*
 
-        <div class="quick-links">
-            <h2>📚 Documentación</h2>
-            <div class="links-grid">
-                <a href="README.md" class="link-btn">📖 README Principal</a>
-                <a href="GITLAB_SETUP.md" class="link-btn">🚀 Configurar GitLab</a>
-                <a href="QUICK_REFERENCE.md" class="link-btn">⚡ Quick Reference</a>
-                <a href="INDEX.md" class="link-btn">📑 Índice Completo</a>
-                <a href="devops-hub.tar.gz" class="link-btn">📦 Descargar TODO</a>
-            </div>
-        </div>
+# Entorno WebLogic
+chown -R webl11:weblogic /serapp/Vaplic/s87a
 
-        <footer>
+# Nota: Tras cambiar permisos, relanzar el job del build si aplica.</code></pre>
+            </div>
+        </section>
+
+        <section id="apache">
+            <h2>🔴 Apache: Legacy vs Batera</h2>
+            
+            <h3>🏢 Rutas de Configuración</h3>
+            <table>
+                <tr><th>Componente</th><th>APACHE LEGACY (Osasuna/NAS)</th><th>APACHE BATERA</th></tr>
+                <tr><td>Config. Principal</td><td><span class="inline-code">/opt/apache2/conf_osasuna_nas/httpd.conf</span></td><td><span class="inline-code">/etc/httpd/conf/httpd.conf</span></td></tr>
+                <tr><td>Virtual Hosts</td><td><span class="inline-code">/opt/apache2/conf_osasuna_nas/{8080|8443}/virtualhosts/</span></td><td><span class="inline-code">/etc/httpd/conf.d/</span></td></tr>
+                <tr><td>Proxy WebLogic</td><td><span class="inline-code">/opt/apache2/conf_common/proxywl/</span></td><td><span class="inline-code">/etc/httpd/conf.extra/proxies/</span></td></tr>
+                <tr><td>Certificados SSL</td><td><span class="inline-code">/opt/apache2/conf_common/certificates/</span></td><td><span class="inline-code">/etc/pki/tls/certs/</span></td></tr>
+                <tr><td>Arranque</td><td><span class="inline-code">/etc/init.d/apache_osasuna</span></td><td><span class="inline-code">systemctl httpd</span></td></tr>
+                <tr><td>Logs</td><td><span class="inline-code">/log/apache2/ejlp295/conf_osasuna_nas/</span></td><td><span class="inline-code">/var/log/httpd/</span></td></tr>
+            </table>
+
+            <h3>🔍 Comandos de Búsqueda y Verificación</h3>
+            <div class="code-block">
+                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+                <pre><code># Buscar configuración específica
+grep -Ril "www.gizarte.eus" --include="*.conf" .
+grep -Ril "o76" --include="*proxy*" .
+grep -Ril "o76" --include="*.conf" .
+
+# Verificar Proxy Legacy (mod_weblogic)
+ls -la /opt/apache2/conf_common/proxywl/
+cat /opt/apache2/conf_common/proxywl/proxywl.ab11.inc
+grep -E "WebLogicCluster|WebLogicHost" /opt/apache2/conf_common/proxywl/proxywl.ab11.inc
+
+# Verificar Balanceador Batera (mod_proxy_balancer)
+grep -r "balancer://" /etc/httpd/conf.d/
+cat /etc/httpd/conf.extra/proxies/pre.batera.eustat.eus_8443_balancer.conf</code></pre>
+            </div>
+
+            <h3>🔐 Verificación de Certificados SSL</h3>
+            <div class="code-block">
+                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+                <pre><code># Ver fechas y dominio del certificado
+openssl x509 -in /opt/apache2/conf_common/certificates/www9.jakina.ejgvdns.crt -noout -dates
+openssl x509 -in /opt/apache2/conf_common/certificates/www9.jakina.ejgvdns.crt -noout -subject
+
+# Probar conexión SSL
+openssl s_client -connect www9.osasuna.jakina.ejgvdns:8443 -servername www9.osasuna.jakina.ejgvdns</code></pre>
+            </div>
+
+            <h3>🌐 Seguimiento DNS / Red</h3>
+            <div class="code-block">
+                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+                <pre><code># Resolución DNS
+nslookup www9.osasuna.jakina.ejgvdns
+nslookup wl11vf0232.ejgvdns
+nslookup pre1-inkestak.batera.eustat.eus
+
+# Conectividad y puertos
+ping 10.200.128.14
+telnet 10.200.128.14 8443
+nc -zv 10.200.128.14 8443</code></pre>
+            </div>
+        </section>
+
+        <section id="weblogic">
+            <h2>🌐 WebLogic: Administración y Parcheo</h2>
+            
+            <h3>🛠️ Procedimiento de Parcheo (SPBAT)</h3>
+            <div class="template-box warning">
+                <strong>⚠️ Pre-requisito:</strong> Asegurar que el FS de <span class="inline-code">/oracle</span> tenga espacio suficiente (ej. ampliar de 10G a 20G). Ver con: <span class="inline-code">df -h /oracle/</span>
+            </div>
+            <div class="code-block">
+                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+                <pre><code># 1. Backup: Realizar snapshot de la máquina virtual (Manual)
+
+# 2. Parar procesos Java
+/dominio/E01_PRU_WL122_OSB_INTER/custombin/stopE01_PRU_WL122_OSB_INTER_SVC111.sh
+/dominio/E01_PRU_WL122_OSB_INTER/custombin/stopAdminServer.sh
+sudo systemctl stop nodemanager
+# (Repetir para otros nodos, ej. SVC121)
+
+# 3. Rollback de parches conflictivos (si aplica, ej. 32720458)
+/oracle/fmw/OPatch/opatch rollback -id 32720458 -silent
+
+# 4. Aplicar parche con SPBAT
+cd /coredumps
+unzip p39221243_122140_Generic.zip
+cd SOA_SPB_12.2.1.4.260417/tools/spbat/generic/SPBAT
+./spbat.sh -phase precheck -oracle_home /oracle/fmw
+./spbat.sh -phase apply -oracle_home /oracle/fmw
+
+# 5. Arrancar procesos Java
+sudo systemctl start nodemanager
+/dominio/E01_PRU_WL122_OSB_INTER/custombin/startAdminServer.sh
+/dominio/E01_PRU_WL122_OSB_INTER/custombin/startE01_PRU_WL122_OSB_INTER_SVC111.sh</code></pre>
+            </div>
+
+            <h3>⚡ Comandos Rápidos WebLogic</h3>
+            <div class="code-block">
+                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+                <pre><code># Start/Stop Admin Server
+cd $DOMAIN_HOME && ./bin/startWebLogic.sh
+cd $DOMAIN_HOME && ./bin/stopWebLogic.sh
+
+# WLST Connect
+wlst.sh
+connect('user','pass','t3://localhost:7001')
+cd('/AppDeployments') && ls()
+
+# Logs
+tail -f $DOMAIN_HOME/servers/AdminServer/logs/AdminServer.log</code></pre>
+            </div>
+        </section>
+
+        <section id="tomcat-nginx">
+            <h2>⚡ Tomcat & Nginx (Resumen)</h2>
+            
+            <h3>🐱 Tomcat</h3>
+            <div class="code-block">
+                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+                <pre><code># Start / Stop
+$CATALINA_HOME/bin/startup.sh
+$CATALINA_HOME/bin/shutdown.sh
+
+# Memoria JVM y Procesos
+jstat -gc $(jps -l | grep Catalina | awk '{print $1}')
+ps aux | grep catalina
+
+# Deploy
+cp app.war $CATALINA_HOME/webapps/</code></pre>
+            </div>
+
+            <h3>🌿 Nginx</h3>
+            <div class="code-block">
+                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+                <pre><code># Syntax check & Reload
+nginx -t
+systemctl reload nginx
+
+# Ver upstreams y conexiones
+grep -r "upstream" /etc/nginx/
+ss -tlnp | grep nginx</code></pre>
+            </div>
+        </section>
+
+        <section id="plantillas">
+            <h2>📋 Plantillas de Resolución de INCs</h2>
+            <p>Copia y adapta estas plantillas para tus respuestas en el sistema de tickets.</p>
+
+            <div class="template-box success">
+                <strong>✅ URL carga correctamente (No se reproduce el error)</strong><br>
+                <em>"Se ha revisado la infraestructura y se ha verificado que el Apache, las instancias de WebLogic y la aplicación se encuentran en buen estado. La siguiente URL carga correctamente y responde sin problemas: [INSERTAR URL]. Por lo tanto, no parece tratarse de un problema de la aplicación. Se recomienda revisar los permisos de acceso y las reglas del firewall como posible origen de la incidencia."</em>
+            </div>
+
+            <div class="template-box">
+                <strong>🔄 Reinicio de Servicios / Instancias (Alta Memoria/Swap)</strong><br>
+                <em>"La alerta fue recuperada tras realizar un reinicio ordenado de las instancias/servicios que consumían mayor cantidad de memoria, liberando los recursos asociados y optimizando el uso de swap. Estas acciones estabilizaron el sistema, permitiendo su correcto funcionamiento."</em>
+            </div>
+
+            <div class="template-box">
+                <strong>📬 Metaposta (Atasco de paquetes)</strong><br>
+                <em>"Se revisa la infraestructura de Metaposta y se detectan instancias en estado warning. De manera preventiva, se realiza un reinicio completo de todos los dominios, seguido del reinicio de la aplicación en el servidor correspondiente. Tras el reinicio, los paquetes atascados comienzan a publicarse correctamente. Se confirma: instancias OK, despliegues OK, colas JMS OK y datasources (DS) OK."</em>
+            </div>
+
+            <div class="template-box warning">
+                <strong>📉 Filesystem (Llenado de Logs)</strong><br>
+                <em>"[GERTU_WEB] Se comprimen los logs antiguos que más memoria ocupaban. Estado actual del FS verificado y liberado."</em>
+            </div>
+        </section>
+
+        <section id="referencias">
+            <h2>📚 Referencias: KBs y Contactos</h2>
+            
+            <h3>👥 Contacto del Equipo</h3>
+            <div class="code-block">
+                <div class="code-header"><span>Emails</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
+                <pre><code>inaki.hernandez@versia.com
+yeray.martin@versia.com
+sofia.dominguez@versia.com
+pedro.montoya@versia.com
+alejandro.regueira@versia.com
+robertocarlos.soto@versia.com
+marcos.garcia@versia.com
+edgarpinto.matuminy@versia.com
+rakel.perez@versia.com
+manuel.perez@versia.com</code></pre>
+            </div>
+
+            <h3>📖 Artículos de Knowledge Base (KB)</h3>
+            <table>
+                <tr><th>Categoría</th><th>KB ID</th><th>Descripción</th></tr>
+                <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0024300</td><td>Procedimiento de Parcheo</td></tr>
+                <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0019033</td><td>Reinicio de WebLogic</td></tr>
+                <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0022474</td><td>Instancias de PARGI</td></tr>
+                <tr><td><span class="tag tag-apache">Apache</span></td><td>KB0021528</td><td>Pasarelas</td></tr>
+                <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0024345</td><td>Instancias de Metaposta</td></tr>
+                <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0022038</td><td>BO / Metaposta desde zBat</td></tr>
+                <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0011082</td><td>KB general de IIS</td></tr>
+                <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0011476</td><td>Alarma IIS / Host alarma IIS</td></tr>
+                <tr><td><span class="tag tag-sys">Builds</span></td><td>KB0010708</td><td>Errores de AnthillPro Build</td></tr>
+                <tr><td><span class="tag tag-sys">Builds</span></td><td>KB0020556</td><td>Cancelar Builds de AnthillPro</td></tr>
+                <tr><td><span class="tag tag-sys">FS</span></td><td>KB0012024</td><td>Llenado FS</td></tr>
+                <tr><td><span class="tag tag-sys">FS</span></td><td>KB0024385</td><td>LOG --> FS</td></tr>
+                <tr><td><span class="tag tag-sys">JMS</span></td><td>KB0021573</td><td>Reinyectar Mensaje JMS</td></tr>
+                <tr><td><span class="tag tag-sys">Red</span></td><td>KB0024779</td><td>Problemas con XLNETs (ver KB0024644)</td></tr>
+                <tr><td><span class="tag tag-sys">DS</span></td><td>EJLP373</td><td>datasource:connectionInUse.active</td></tr>
+            </table>
+        </section>
+
+        <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--bg-tertiary); color: var(--text-secondary); text-align: center; font-size: 0.9rem;">
             <p>🔧 DevOps Hub | Comandos Diarios para DevOps/SysAdmin</p>
-            <p style="margin-top: 10px; opacity: 0.8;">
-                <strong>Tecnologías:</strong> Apache • Nginx • Tomcat • WebLogic 
-                <br>
-                <strong>Última actualización:</strong> Julio 2026
-            </p>
-            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.7;">
-                Repositorio: <a href="https://github.com/EdgarPintoMatuminy/devops-hub" style="color: white; text-decoration: underline;">github.com/EdgarPintoMatuminy/devops-hub</a>
-            </p>
+            <p>Última actualización: Julio 2026 | Repositorio: github.com/EdgarPintoMatuminy/devops-hub</p>
         </footer>
-    </div>
+
+    </main>
+
+    <!-- Scripts para funcionalidad -->
+    <script>
+        // 1. Fecha Automática (AAAAMMDD)
+        document.addEventListener('DOMContentLoaded', () => {
+            const now = new Date();
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            const dateStr = `${yyyy}${mm}${dd}`;
+            
+            // Mostrar en el dashboard
+            const display = document.getElementById('current-date-display');
+            if(display) display.textContent = `${dd}/${mm}/${yyyy}`;
+
+            // Rellenar todos los spans con clase 'fecha-auto'
+            document.querySelectorAll('.fecha-auto').forEach(el => {
+                el.textContent = dateStr;
+            });
+        });
+
+        // 2. Función Copiar al Portapapeles
+        function copyCode(button) {
+            const codeBlock = button.parentElement.nextElementSibling;
+            const text = codeBlock.innerText;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '¡Copiado!';
+                button.style.backgroundColor = '#10b981';
+                button.style.color = 'white';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.backgroundColor = '';
+                    button.style.color = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Error al copiar:', err);
+            });
+        }
+
+        // 3. Resaltar enlace activo en el sidebar al hacer scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 60) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
