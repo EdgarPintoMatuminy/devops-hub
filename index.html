@@ -22,6 +22,23 @@
             --highlight-red: rgba(239, 68, 68, 0.25);
             --highlight-blue: rgba(59, 130, 246, 0.25);
         }
+        
+        /* Modo Diurno (Light) */
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --code-bg: #1e293b;
+            --highlight-yellow: rgba(245, 158, 11, 0.35);
+            --highlight-green: rgba(16, 185, 129, 0.35);
+            --highlight-red: rgba(239, 68, 68, 0.35);
+            --highlight-blue: rgba(59, 130, 246, 0.35);
+        }
+        
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -29,9 +46,9 @@
             color: var(--text-primary);
             line-height: 1.6;
             display: flex;
+            transition: background-color 0.3s, color 0.3s;
         }
         
-        /* ===== ESTILOS ORIGINALES ===== */
         .sidebar {
             width: 280px;
             background-color: var(--bg-secondary);
@@ -40,6 +57,7 @@
             overflow-y: auto;
             padding: 20px;
             border-right: 1px solid var(--bg-tertiary);
+            transition: background-color 0.3s, border-color 0.3s;
         }
         .sidebar h2 {
             font-size: 1.2rem;
@@ -96,6 +114,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 10px;
+            transition: background-color 0.3s, color 0.3s;
         }
         .copy-btn {
             background-color: var(--bg-secondary);
@@ -107,7 +126,7 @@
             font-size: 0.8rem;
             transition: background 0.2s;
         }
-        .copy-btn:hover { background-color: var(--accent); }
+        .copy-btn:hover { background-color: var(--accent); color: white; }
         pre {
             padding: 15px;
             overflow-x: auto;
@@ -139,7 +158,7 @@
             border-bottom: 1px solid var(--bg-tertiary);
         }
         th { background-color: var(--bg-tertiary); color: var(--text-primary); }
-        tr:hover { background-color: rgba(255,255,255,0.02); }
+        tr:hover { background-color: rgba(128,128,128,0.05); }
 
         .template-box {
             background-color: rgba(59, 130, 246, 0.1);
@@ -168,6 +187,7 @@
         .tag-apache { background-color: #d97706; color: white; }
         .tag-wl { background-color: #dc2626; color: white; }
         .tag-sys { background-color: #2563eb; color: white; }
+        .tag-oid { background-color: #7c3aed; color: white; }
 
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
@@ -175,8 +195,6 @@
             body { flex-direction: column; }
         }
 
-        /* ===== NUEVAS FUNCIONALIDADES AÑADIDAS ===== */
-        
         /* Buscador */
         .search-bar {
             position: sticky;
@@ -186,6 +204,7 @@
             padding: 15px 0;
             border-bottom: 2px solid var(--bg-tertiary);
             margin-bottom: 20px;
+            transition: background-color 0.3s, border-color 0.3s;
         }
         .search-wrapper {
             display: flex;
@@ -200,6 +219,7 @@
             border-radius: 8px;
             color: var(--text-primary);
             font-size: 1rem;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
         }
         .search-input:focus { outline: none; border-color: var(--accent); }
         .search-stats {
@@ -245,6 +265,31 @@
         .btn-danger { background: var(--danger); color: white; }
         .btn-danger:hover { background: #dc2626; }
 
+        /* Toggle de tema */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+            background: var(--bg-secondary);
+            border: 2px solid var(--bg-tertiary);
+            color: var(--text-primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            border-color: var(--accent);
+        }
+
         /* Copiar por línea */
         .code-line {
             display: flex;
@@ -252,7 +297,7 @@
             align-items: center;
             padding: 2px 0;
         }
-        .code-line:hover { background: rgba(255,255,255,0.03); }
+        .code-line:hover { background: rgba(128,128,128,0.05); }
         .copy-line-btn {
             background: transparent;
             border: 1px solid var(--bg-tertiary);
@@ -397,6 +442,9 @@
 </head>
 <body>
 
+    <!-- ===== NUEVO: Botón de Tema (Nocturno/Diurno) ===== -->
+    <button class="theme-toggle" id="themeToggle" title="Cambiar tema (Nocturno/Diurno)">🌙</button>
+
     <!-- Sidebar Navigation -->
     <nav class="sidebar">
         <h2>🔧 DevOps Hub</h2>
@@ -415,7 +463,7 @@
     <!-- Main Content -->
     <main class="main-content">
         
-        <!-- ===== NUEVO: Barra de Búsqueda ===== -->
+        <!-- Barra de Búsqueda -->
         <div class="search-bar">
             <div class="search-wrapper">
                 <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar cualquier palabra... (ej: apache, ssl, weblogic, healthcheck)">
@@ -423,7 +471,7 @@
             </div>
         </div>
 
-        <!-- ===== NUEVO: Botones de Acción ===== -->
+        <!-- Botones de Acción -->
         <div class="action-buttons">
             <button class="btn btn-primary" onclick="openModal('addCommandModal')">➕ Añadir Comando</button>
             <button class="btn btn-success" onclick="openModal('addEmailModal')">📧 Añadir Email</button>
@@ -448,7 +496,7 @@
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">🎨 Colorear...</option>
+                            <option value="">⚫ Original</option>
                             <option value="highlight-yellow">⚠️ Importante</option>
                             <option value="highlight-green">✅ Seguro</option>
                             <option value="highlight-red">🔴 Peligro</option>
@@ -473,7 +521,7 @@ find . -name "*.tmp" -mtime +2 -exec gzip {} \;</code></pre>
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">🎨 Colorear...</option>
+                            <option value="">⚫ Original</option>
                             <option value="highlight-yellow">⚠️ Importante</option>
                             <option value="highlight-green">✅ Seguro</option>
                             <option value="highlight-red">🔴 Peligro</option>
@@ -512,7 +560,7 @@ chown -R webl11:weblogic /serapp/Vaplic/s87a
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">🎨 Colorear...</option>
+                            <option value="">⚫ Original</option>
                             <option value="highlight-yellow">⚠️ Importante</option>
                             <option value="highlight-green">✅ Seguro</option>
                             <option value="highlight-red">🔴 Peligro</option>
@@ -542,7 +590,7 @@ cat /etc/httpd/conf.extra/proxies/pre.batera.eustat.eus_8443_balancer.conf</code
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">🎨 Colorear...</option>
+                            <option value="">⚫ Original</option>
                             <option value="highlight-yellow">⚠️ Importante</option>
                             <option value="highlight-green">✅ Seguro</option>
                             <option value="highlight-red">🔴 Peligro</option>
@@ -565,7 +613,7 @@ openssl s_client -connect www9.osasuna.jakina.ejgvdns:8443 -servername www9.osas
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">🎨 Colorear...</option>
+                            <option value="">⚫ Original</option>
                             <option value="highlight-yellow">⚠️ Importante</option>
                             <option value="highlight-green">✅ Seguro</option>
                             <option value="highlight-red">🔴 Peligro</option>
@@ -598,7 +646,7 @@ nc -zv 10.200.128.14 8443</code></pre>
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">🎨 Colorear...</option>
+                            <option value="">⚫ Original</option>
                             <option value="highlight-yellow">⚠️ Importante</option>
                             <option value="highlight-green">✅ Seguro</option>
                             <option value="highlight-red">🔴 Peligro</option>
@@ -637,7 +685,7 @@ sudo systemctl start nodemanager
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">🎨 Colorear...</option>
+                            <option value="">⚫ Original</option>
                             <option value="highlight-yellow">⚠️ Importante</option>
                             <option value="highlight-green">✅ Seguro</option>
                             <option value="highlight-red">🔴 Peligro</option>
@@ -669,7 +717,7 @@ tail -f $DOMAIN_HOME/servers/AdminServer/logs/AdminServer.log</code></pre>
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">🎨 Colorear...</option>
+                            <option value="">⚫ Original</option>
                             <option value="highlight-yellow">⚠️ Importante</option>
                             <option value="highlight-green">✅ Seguro</option>
                             <option value="highlight-red">🔴 Peligro</option>
@@ -696,7 +744,7 @@ cp app.war $CATALINA_HOME/webapps/</code></pre>
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">🎨 Colorear...</option>
+                            <option value="">⚫ Original</option>
                             <option value="highlight-yellow">⚠️ Importante</option>
                             <option value="highlight-green">✅ Seguro</option>
                             <option value="highlight-red">🔴 Peligro</option>
@@ -768,6 +816,7 @@ manuel.perez@versia.com</code></pre>
                 <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0019033</td><td>Reinicio de WebLogic</td></tr>
                 <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0022474</td><td>Instancias de PARGI</td></tr>
                 <tr><td><span class="tag tag-apache">Apache</span></td><td>KB0021528</td><td>Pasarelas</td></tr>
+                <tr><td><span class="tag tag-oid">OID</span></td><td>KB0030126</td><td>Comandos para parar/arrancar el OID de justicia</td></tr>
                 <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0024345</td><td>Instancias de Metaposta</td></tr>
                 <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0022038</td><td>BO / Metaposta desde zBat</td></tr>
                 <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0011082</td><td>KB general de IIS</td></tr>
@@ -782,7 +831,6 @@ manuel.perez@versia.com</code></pre>
             </table>
         </section>
 
-        <!-- ===== NUEVO: Sección de Contenido Personalizado ===== -->
         <section id="personalizado" data-searchable="true">
             <h2>⭐ Mi Contenido Personalizado</h2>
             <div id="customCommandsContainer"></div>
@@ -796,7 +844,7 @@ manuel.perez@versia.com</code></pre>
 
     </main>
 
-    <!-- ===== NUEVO: Modales ===== -->
+    <!-- Modales -->
     <div id="addCommandModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -843,9 +891,35 @@ manuel.perez@versia.com</code></pre>
         </div>
     </div>
 
-    <!-- Scripts para funcionalidad -->
     <script>
-        // 1. Fecha Automática (AAAAMMDD)
+        // ========== PERSISTENCIA DE ESTADO ==========
+        
+        // 1. Restaurar tema (nocturno/diurno)
+        (function initTheme() {
+            const savedTheme = localStorage.getItem('devopsTheme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        })();
+
+        function updateThemeIcon(theme) {
+            const btn = document.getElementById('themeToggle');
+            if (btn) btn.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('devopsTheme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        // 2. Guardar posición de scroll antes de recargar
+        window.addEventListener('beforeunload', () => {
+            sessionStorage.setItem('scrollPosition', window.scrollY);
+        });
+
+        // 3. Inicialización al cargar
         document.addEventListener('DOMContentLoaded', () => {
             const now = new Date();
             const yyyy = now.getFullYear();
@@ -860,17 +934,29 @@ manuel.perez@versia.com</code></pre>
                 el.textContent = dateStr;
             });
 
-            // Mejorar bloques de código para copiar por línea
             enhanceCodeBlocks();
-            
-            // Cargar datos personalizados
             renderCustomContent();
-            
-            // Restaurar colores guardados
             restoreHighlights();
+            
+            // Restaurar término de búsqueda guardado
+            const savedSearch = localStorage.getItem('devopsSearch') || '';
+            const searchInput = document.getElementById('searchInput');
+            if (savedSearch && searchInput) {
+                searchInput.value = savedSearch;
+                searchInput.dispatchEvent(new Event('input'));
+            }
+            
+            // Restaurar posición de scroll
+            setTimeout(() => {
+                const savedScroll = sessionStorage.getItem('scrollPosition');
+                if (savedScroll) {
+                    window.scrollTo(0, parseInt(savedScroll));
+                }
+            }, 100);
         });
 
-        // 2. Función Copiar al Portapapeles (Bloque completo)
+        // ========== FUNCIONES ORIGINALES ==========
+
         function copyCode(button) {
             const codeBlock = button.closest('.code-block').querySelector('pre');
             const text = codeBlock.innerText;
@@ -891,7 +977,6 @@ manuel.perez@versia.com</code></pre>
             });
         }
 
-        // 3. Resaltar enlace activo en el sidebar al hacer scroll
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('.nav-links a');
 
@@ -912,12 +997,11 @@ manuel.perez@versia.com</code></pre>
             });
         });
 
-        // ===== NUEVAS FUNCIONALIDADES =====
+        // ========== MEJORAS AÑADIDAS ==========
 
-        // A. Mejorar bloques de código para copiar línea por línea
         function enhanceCodeBlocks() {
             document.querySelectorAll('.code-block pre').forEach(pre => {
-                if (pre.querySelector('.code-line')) return; // Ya mejorado
+                if (pre.querySelector('.code-line')) return;
                 
                 const codeElement = pre.querySelector('code');
                 if (!codeElement) return;
@@ -955,17 +1039,20 @@ manuel.perez@versia.com</code></pre>
             });
         }
 
-        // B. Buscador en tiempo real
+        // Buscador con persistencia
         const searchInput = document.getElementById('searchInput');
         const searchStats = document.getElementById('searchStats');
         
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase().trim();
+            
+            // Guardar término en localStorage
+            localStorage.setItem('devopsSearch', e.target.value);
+            
             const searchableElements = document.querySelectorAll('[data-searchable="true"]');
             let matchCount = 0;
 
             searchableElements.forEach(el => {
-                // Limpiar highlights anteriores
                 el.querySelectorAll('.search-match').forEach(match => {
                     const parent = match.parentNode;
                     parent.replaceChild(document.createTextNode(match.textContent), match);
@@ -1023,18 +1110,25 @@ manuel.perez@versia.com</code></pre>
             });
         }
 
-        // C. Colorear bloques
+        // Colorear bloques (con opción de quitar color)
         function highlightBlock(select) {
             const value = select.value;
-            if (!value) return;
-            
             const pre = select.closest('.code-header').nextElementSibling;
-            pre.classList.remove('highlight-yellow', 'highlight-green', 'highlight-red', 'highlight-blue');
-            pre.classList.add(value);
             
-            // Guardar en localStorage
+            // Quitar todos los colores
+            pre.classList.remove('highlight-yellow', 'highlight-green', 'highlight-red', 'highlight-blue');
+            
+            // Aplicar nuevo color si no es "Original"
+            if (value) {
+                pre.classList.add(value);
+            }
+            
             const blockId = Array.from(document.querySelectorAll('.code-block')).indexOf(select.closest('.code-block'));
-            localStorage.setItem(`highlight_block_${blockId}`, value);
+            if (value) {
+                localStorage.setItem(`highlight_block_${blockId}`, value);
+            } else {
+                localStorage.removeItem(`highlight_block_${blockId}`);
+            }
         }
 
         function restoreHighlights() {
@@ -1049,7 +1143,6 @@ manuel.perez@versia.com</code></pre>
             });
         }
 
-        // D. Modales
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
         window.onclick = function(event) {
@@ -1058,7 +1151,6 @@ manuel.perez@versia.com</code></pre>
             }
         }
 
-        // E. Añadir Comando
         function addCommand() {
             const title = document.getElementById('cmdTitle').value.trim();
             const category = document.getElementById('cmdCategory').value;
@@ -1086,7 +1178,6 @@ manuel.perez@versia.com</code></pre>
             renderCustomContent();
         }
 
-        // F. Añadir Email
         function addEmail() {
             const email = document.getElementById('newEmail').value.trim();
             const name = document.getElementById('emailName').value.trim();
@@ -1112,9 +1203,7 @@ manuel.perez@versia.com</code></pre>
             renderCustomContent();
         }
 
-        // G. Renderizar Contenido Personalizado
         function renderCustomContent() {
-            // Comandos
             const commands = JSON.parse(localStorage.getItem('customCommands') || '[]');
             const cmdContainer = document.getElementById('customCommandsContainer');
             if (commands.length > 0) {
@@ -1138,7 +1227,6 @@ manuel.perez@versia.com</code></pre>
                 cmdContainer.innerHTML = '<p style="color:var(--text-secondary);">No hay comandos personalizados aún. ¡Añade uno arriba!</p>';
             }
 
-            // Emails
             const emails = JSON.parse(localStorage.getItem('customEmails') || '[]');
             const emailContainer = document.getElementById('customEmailsContainer');
             if (emails.length > 0) {
@@ -1162,7 +1250,6 @@ manuel.perez@versia.com</code></pre>
             }
         }
 
-        // H. Eliminar item
         function deleteItem(type, id) {
             if (!confirm('¿Eliminar este elemento?')) return;
             const items = JSON.parse(localStorage.getItem(type) || '[]');
@@ -1171,7 +1258,6 @@ manuel.perez@versia.com</code></pre>
             renderCustomContent();
         }
 
-        // I. Exportar datos
         function exportData() {
             const data = {
                 customCommands: JSON.parse(localStorage.getItem('customCommands') || '[]'),
@@ -1187,18 +1273,20 @@ manuel.perez@versia.com</code></pre>
             URL.revokeObjectURL(url);
         }
 
-        // J. Borrar personalizaciones
         function clearCustomData() {
             if (confirm('⚠️ ¿Estás seguro de borrar TODOS tus comandos y emails personalizados? Esta acción no se puede deshacer.')) {
                 localStorage.removeItem('customCommands');
                 localStorage.removeItem('customEmails');
-                // Limpiar highlights
+                localStorage.removeItem('devopsSearch');
                 for (let i = 0; i < localStorage.length; i++) {
                     const key = localStorage.key(i);
                     if (key && key.startsWith('highlight_block_')) {
                         localStorage.removeItem(key);
                     }
                 }
+                document.getElementById('searchInput').value = '';
+                document.getElementById('searchStats').textContent = '';
+                document.querySelectorAll('.hidden-by-search').forEach(el => el.classList.remove('hidden-by-search'));
                 renderCustomContent();
                 location.reload();
             }
