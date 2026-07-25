@@ -17,6 +17,10 @@
             --warning: #f59e0b;
             --danger: #ef4444;
             --code-bg: #0d1117;
+            --highlight-yellow: rgba(245, 158, 11, 0.3);
+            --highlight-green: rgba(16, 185, 129, 0.3);
+            --highlight-red: rgba(239, 68, 68, 0.3);
+            --highlight-blue: rgba(59, 130, 246, 0.3);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -70,6 +74,74 @@
             width: 100%;
             max-width: 1200px;
         }
+        
+        /* Search Bar */
+        .search-container {
+            position: sticky;
+            top: 0;
+            background: var(--bg-primary);
+            padding: 20px 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--bg-tertiary);
+            margin-bottom: 30px;
+        }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--bg-tertiary);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .search-stats {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        /* Highlight styles */
+        .highlight-yellow { background-color: var(--highlight-yellow); border-left: 3px solid var(--warning); padding: 2px 5px; border-radius: 3px; }
+        .highlight-green { background-color: var(--highlight-green); border-left: 3px solid var(--success); padding: 2px 5px; border-radius: 3px; }
+        .highlight-red { background-color: var(--highlight-red); border-left: 3px solid var(--danger); padding: 2px 5px; border-radius: 3px; }
+        .highlight-blue { background-color: var(--highlight-blue); border-left: 3px solid var(--accent); padding: 2px 5px; border-radius: 3px; }
+        .search-match { background-color: #fbbf24; color: #000; padding: 2px 4px; border-radius: 3px; font-weight: bold; }
+        
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { background: #059669; }
+        .btn-warning { background: var(--warning); color: #000; }
+        .btn-danger { background: var(--danger); color: white; }
+        
         h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--text-primary); }
         h2 { font-size: 1.8rem; margin-top: 40px; margin-bottom: 20px; color: var(--accent); border-bottom: 2px solid var(--bg-tertiary); padding-bottom: 10px; }
         h3 { font-size: 1.3rem; margin-top: 25px; margin-bottom: 15px; color: var(--text-primary); }
@@ -92,6 +164,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
+        }
+        .highlight-selector {
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--bg-secondary);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 0.8rem;
         }
         .copy-btn {
             background-color: var(--bg-secondary);
@@ -104,12 +186,40 @@
             transition: background 0.2s;
         }
         .copy-btn:hover { background-color: var(--accent); }
+        .copy-line-btn {
+            background: transparent;
+            border: 1px solid var(--bg-tertiary);
+            color: var(--text-secondary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            margin-left: 10px;
+            opacity: 0;
+            transition: all 0.2s;
+        }
+        .code-line:hover .copy-line-btn {
+            opacity: 1;
+        }
+        .copy-line-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
         pre {
             padding: 15px;
             overflow-x: auto;
             font-family: "Consolas", "Monaco", "Courier New", monospace;
             font-size: 0.9rem;
             color: #e2e8f0;
+        }
+        .code-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2px 0;
+        }
+        .code-line:hover {
+            background: rgba(255,255,255,0.02);
         }
         code { font-family: inherit; }
         .inline-code {
@@ -168,6 +278,68 @@
         .tag-wl { background-color: #dc2626; color: white; }
         .tag-sys { background-color: #2563eb; color: white; }
 
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--bg-secondary);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+        .form-group textarea {
+            min-height: 100px;
+            font-family: monospace;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
@@ -180,14 +352,14 @@
 
     <!-- Sidebar Navigation -->
     <nav class="sidebar">
-        <h2>🔧 DevOps Hub</h2>
+        <h2> DevOps Hub</h2>
         <ul class="nav-links">
             <li><a href="#inicio">🏠 Inicio</a></li>
-            <li><a href="#limpieza">🧹 Limpieza Automática</a></li>
-            <li><a href="#apache">🔴 Apache (Legacy/Batera)</a></li>
-            <li><a href="#weblogic">🌐 WebLogic & Parcheo</a></li>
-            <li><a href="#tomcat-nginx">⚡ Tomcat & Nginx</a></li>
-            <li><a href="#plantillas">📋 Plantillas de INC</a></li>
+            <li><a href="#limpieza">🧹 Limpieza</a></li>
+            <li><a href="#apache">🔴 Apache</a></li>
+            <li><a href="#weblogic"> WebLogic</a></li>
+            <li><a href="#tomcat-nginx"> Tomcat/Nginx</a></li>
+            <li><a href="#plantillas">📋 Plantillas INC</a></li>
             <li><a href="#referencias">📚 KBs y Contactos</a></li>
         </ul>
     </nav>
@@ -195,204 +367,158 @@
     <!-- Main Content -->
     <main class="main-content">
         
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder=" Buscar comandos, palabras clave... (ej: apache, ssl, restart)">
+            </div>
+            <div class="search-stats" id="searchStats"></div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button class="btn btn-primary" onclick="openModal('addCommandModal')">➕ Añadir Comando</button>
+            <button class="btn btn-success" onclick="openModal('addEmailModal')">📧 Añadir Email</button>
+            <button class="btn btn-warning" onclick="exportData()"> Exportar Mis Cambios</button>
+            <button class="btn btn-danger" onclick="clearCustomData()">️ Borrar Personalizaciones</button>
+        </div>
+
         <section id="inicio">
             <h1>DevOps Hub - Comandos Diarios</h1>
             <p>Hub centralizado de comandos, scripts, procedimientos y notas para la administración y troubleshooting de Apache, Nginx, Tomcat y WebLogic.</p>
             <div class="template-box success">
-                <strong>📅 Fecha del sistema detectada:</strong> <span id="current-date-display"></span> (Los comandos de limpieza usan esta fecha automáticamente).
+                <strong> Fecha del sistema:</strong> <span id="current-date-display"></span>
             </div>
         </section>
 
         <section id="limpieza">
             <h2>🧹 Limpieza de Temporales y Permisos</h2>
-            <p>El formato de fecha <span class="inline-code">AAAAMMDD</span> se genera automáticamente con JavaScript según el día de hoy.</p>
             
-            <div class="code-block">
-                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-                <pre><code># Renombrado de temporales con fecha automática
-mv tmp tmp.<span class="fecha-auto"></span>
-mv cache cache.<span class="fecha-auto"></span>
-mv stage stage.<span class="fecha-auto"></span>
-
-# Búsqueda y compresión de archivos .tmp antiguos (+2 días)
-find . -name "*.tmp" -mtime +2 -exec ls -ltrh {} \;
-find . -name "*.tmp" -mtime +2 -exec gzip {} \;</code></pre>
+            <div class="code-block" data-searchable="true">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this, 'limpieza')">
+                            <option value="">🎨 Colorear...</option>
+                            <option value="highlight-yellow">️ Importante</option>
+                            <option value="highlight-green">✅ Seguro</option>
+                            <option value="highlight-red">🔴 Peligro</option>
+                            <option value="highlight-blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                    </div>
+                </div>
+                <pre><div class="code-line">mv tmp tmp.<span class="fecha-auto"></span><button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">mv cache cache.<span class="fecha-auto"></span><button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">mv stage stage.<span class="fecha-auto"></span><button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">find . -name "*.tmp" -mtime +2 -exec ls -ltrh {} \;<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">find . -name "*.tmp" -mtime +2 -exec gzip {} \;<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
             </div>
 
-            <h3>🔐 Corrección de Permisos (Best Practices)</h3>
-            <div class="code-block">
-                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-                <pre><code># Entorno Apache
-chown -R web:apache2 /web/aplic/r01/*
-
-# Entorno WebLogic
-chown -R webl11:weblogic /serapp/Vaplic/s87a
-
-# Nota: Tras cambiar permisos, relanzar el job del build si aplica.</code></pre>
+            <h3>🔐 Corrección de Permisos</h3>
+            <div class="code-block" data-searchable="true">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this, 'permisos')">
+                            <option value="">🎨 Colorear...</option>
+                            <option value="highlight-yellow">⚠️ Importante</option>
+                            <option value="highlight-green">✅ Seguro</option>
+                            <option value="highlight-red">🔴 Peligro</option>
+                            <option value="highlight-blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                    </div>
+                </div>
+                <pre><div class="code-line">chown -R web:apache2 /web/aplic/r01/*<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">chown -R webl11:weblogic /serapp/Vaplic/s87a<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
             </div>
         </section>
 
         <section id="apache">
-            <h2>🔴 Apache: Legacy vs Batera</h2>
+            <h2> Apache: Legacy vs Batera</h2>
             
             <h3>🏢 Rutas de Configuración</h3>
-            <table>
-                <tr><th>Componente</th><th>APACHE LEGACY (Osasuna/NAS)</th><th>APACHE BATERA</th></tr>
+            <table data-searchable="true">
+                <tr><th>Componente</th><th>APACHE LEGACY</th><th>APACHE BATERA</th></tr>
                 <tr><td>Config. Principal</td><td><span class="inline-code">/opt/apache2/conf_osasuna_nas/httpd.conf</span></td><td><span class="inline-code">/etc/httpd/conf/httpd.conf</span></td></tr>
                 <tr><td>Virtual Hosts</td><td><span class="inline-code">/opt/apache2/conf_osasuna_nas/{8080|8443}/virtualhosts/</span></td><td><span class="inline-code">/etc/httpd/conf.d/</span></td></tr>
                 <tr><td>Proxy WebLogic</td><td><span class="inline-code">/opt/apache2/conf_common/proxywl/</span></td><td><span class="inline-code">/etc/httpd/conf.extra/proxies/</span></td></tr>
-                <tr><td>Certificados SSL</td><td><span class="inline-code">/opt/apache2/conf_common/certificates/</span></td><td><span class="inline-code">/etc/pki/tls/certs/</span></td></tr>
                 <tr><td>Arranque</td><td><span class="inline-code">/etc/init.d/apache_osasuna</span></td><td><span class="inline-code">systemctl httpd</span></td></tr>
-                <tr><td>Logs</td><td><span class="inline-code">/log/apache2/ejlp295/conf_osasuna_nas/</span></td><td><span class="inline-code">/var/log/httpd/</span></td></tr>
             </table>
 
-            <h3>🔍 Comandos de Búsqueda y Verificación</h3>
-            <div class="code-block">
-                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-                <pre><code># Buscar configuración específica
-grep -Ril "www.gizarte.eus" --include="*.conf" .
-grep -Ril "o76" --include="*proxy*" .
-grep -Ril "o76" --include="*.conf" .
-
-# Verificar Proxy Legacy (mod_weblogic)
-ls -la /opt/apache2/conf_common/proxywl/
-cat /opt/apache2/conf_common/proxywl/proxywl.ab11.inc
-grep -E "WebLogicCluster|WebLogicHost" /opt/apache2/conf_common/proxywl/proxywl.ab11.inc
-
-# Verificar Balanceador Batera (mod_proxy_balancer)
-grep -r "balancer://" /etc/httpd/conf.d/
-cat /etc/httpd/conf.extra/proxies/pre.batera.eustat.eus_8443_balancer.conf</code></pre>
-            </div>
-
-            <h3>🔐 Verificación de Certificados SSL</h3>
-            <div class="code-block">
-                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-                <pre><code># Ver fechas y dominio del certificado
-openssl x509 -in /opt/apache2/conf_common/certificates/www9.jakina.ejgvdns.crt -noout -dates
-openssl x509 -in /opt/apache2/conf_common/certificates/www9.jakina.ejgvdns.crt -noout -subject
-
-# Probar conexión SSL
-openssl s_client -connect www9.osasuna.jakina.ejgvdns:8443 -servername www9.osasuna.jakina.ejgvdns</code></pre>
-            </div>
-
-            <h3>🌐 Seguimiento DNS / Red</h3>
-            <div class="code-block">
-                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-                <pre><code># Resolución DNS
-nslookup www9.osasuna.jakina.ejgvdns
-nslookup wl11vf0232.ejgvdns
-nslookup pre1-inkestak.batera.eustat.eus
-
-# Conectividad y puertos
-ping 10.200.128.14
-telnet 10.200.128.14 8443
-nc -zv 10.200.128.14 8443</code></pre>
+            <h3>🔍 Comandos de Búsqueda</h3>
+            <div class="code-block" data-searchable="true">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this, 'apache-search')">
+                            <option value="">🎨 Colorear...</option>
+                            <option value="highlight-yellow">⚠️ Importante</option>
+                            <option value="highlight-green">✅ Seguro</option>
+                            <option value="highlight-red">🔴 Peligro</option>
+                            <option value="highlight-blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                    </div>
+                </div>
+                <pre><div class="code-line">grep -Ril "www.gizarte.eus" --include="*.conf" .<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">grep -Ril "o76" --include="*proxy*" .<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">ls -la /opt/apache2/conf_common/proxywl/<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">cat /opt/apache2/conf_common/proxywl/proxywl.ab11.inc<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
             </div>
         </section>
 
         <section id="weblogic">
             <h2>🌐 WebLogic: Administración y Parcheo</h2>
             
-            <h3>🛠️ Procedimiento de Parcheo (SPBAT)</h3>
+            <h3>️ Procedimiento de Parcheo (SPBAT)</h3>
             <div class="template-box warning">
-                <strong>⚠️ Pre-requisito:</strong> Asegurar que el FS de <span class="inline-code">/oracle</span> tenga espacio suficiente (ej. ampliar de 10G a 20G). Ver con: <span class="inline-code">df -h /oracle/</span>
+                <strong>⚠️ Pre-requisito:</strong> Asegurar espacio en <span class="inline-code">/oracle</span>
             </div>
-            <div class="code-block">
-                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-                <pre><code># 1. Backup: Realizar snapshot de la máquina virtual (Manual)
-
-# 2. Parar procesos Java
-/dominio/E01_PRU_WL122_OSB_INTER/custombin/stopE01_PRU_WL122_OSB_INTER_SVC111.sh
-/dominio/E01_PRU_WL122_OSB_INTER/custombin/stopAdminServer.sh
-sudo systemctl stop nodemanager
-# (Repetir para otros nodos, ej. SVC121)
-
-# 3. Rollback de parches conflictivos (si aplica, ej. 32720458)
-/oracle/fmw/OPatch/opatch rollback -id 32720458 -silent
-
-# 4. Aplicar parche con SPBAT
-cd /coredumps
-unzip p39221243_122140_Generic.zip
-cd SOA_SPB_12.2.1.4.260417/tools/spbat/generic/SPBAT
-./spbat.sh -phase precheck -oracle_home /oracle/fmw
-./spbat.sh -phase apply -oracle_home /oracle/fmw
-
-# 5. Arrancar procesos Java
-sudo systemctl start nodemanager
-/dominio/E01_PRU_WL122_OSB_INTER/custombin/startAdminServer.sh
-/dominio/E01_PRU_WL122_OSB_INTER/custombin/startE01_PRU_WL122_OSB_INTER_SVC111.sh</code></pre>
-            </div>
-
-            <h3>⚡ Comandos Rápidos WebLogic</h3>
-            <div class="code-block">
-                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-                <pre><code># Start/Stop Admin Server
-cd $DOMAIN_HOME && ./bin/startWebLogic.sh
-cd $DOMAIN_HOME && ./bin/stopWebLogic.sh
-
-# WLST Connect
-wlst.sh
-connect('user','pass','t3://localhost:7001')
-cd('/AppDeployments') && ls()
-
-# Logs
-tail -f $DOMAIN_HOME/servers/AdminServer/logs/AdminServer.log</code></pre>
+            <div class="code-block" data-searchable="true">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this, 'parcheo')">
+                            <option value="">🎨 Colorear...</option>
+                            <option value="highlight-yellow">⚠️ Importante</option>
+                            <option value="highlight-green">✅ Seguro</option>
+                            <option value="highlight-red">🔴 Peligro</option>
+                            <option value="highlight-blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                    </div>
+                </div>
+                <pre><div class="code-line">df -h /oracle/<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">/dominio/E01_PRU_WL122_OSB_INTER/custombin/stopAdminServer.sh<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">sudo systemctl stop nodemanager<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">/oracle/fmw/OPatch/opatch rollback -id 32720458 -silent<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">./spbat.sh -phase apply -oracle_home /oracle/fmw<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
             </div>
         </section>
 
         <section id="tomcat-nginx">
-            <h2>⚡ Tomcat & Nginx (Resumen)</h2>
+            <h2>⚡ Tomcat & Nginx</h2>
             
             <h3>🐱 Tomcat</h3>
-            <div class="code-block">
-                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-                <pre><code># Start / Stop
-$CATALINA_HOME/bin/startup.sh
-$CATALINA_HOME/bin/shutdown.sh
-
-# Memoria JVM y Procesos
-jstat -gc $(jps -l | grep Catalina | awk '{print $1}')
-ps aux | grep catalina
-
-# Deploy
-cp app.war $CATALINA_HOME/webapps/</code></pre>
+            <div class="code-block" data-searchable="true">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                </div>
+                <pre><div class="code-line">$CATALINA_HOME/bin/startup.sh<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">$CATALINA_HOME/bin/shutdown.sh<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">jstat -gc $(jps -l | grep Catalina | awk '{print $1}')<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
             </div>
 
             <h3>🌿 Nginx</h3>
-            <div class="code-block">
-                <div class="code-header"><span>Bash</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-                <pre><code># Syntax check & Reload
-nginx -t
-systemctl reload nginx
-
-# Ver upstreams y conexiones
-grep -r "upstream" /etc/nginx/
-ss -tlnp | grep nginx</code></pre>
+            <div class="code-block" data-searchable="true">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                </div>
+                <pre><div class="code-line">nginx -t<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">systemctl reload nginx<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">grep -r "upstream" /etc/nginx/<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
             </div>
         </section>
 
         <section id="plantillas">
             <h2>📋 Plantillas de Resolución de INCs</h2>
-            <p>Copia y adapta estas plantillas para tus respuestas en el sistema de tickets.</p>
 
-            <div class="template-box success">
-                <strong>✅ URL carga correctamente (No se reproduce el error)</strong><br>
-                <em>"Se ha revisado la infraestructura y se ha verificado que el Apache, las instancias de WebLogic y la aplicación se encuentran en buen estado. La siguiente URL carga correctamente y responde sin problemas: [INSERTAR URL]. Por lo tanto, no parece tratarse de un problema de la aplicación. Se recomienda revisar los permisos de acceso y las reglas del firewall como posible origen de la incidencia."</em>
+            <div class="template-box success" data-searchable="true">
+                <strong>✅ URL carga correctamente</strong><br>
+                <em>"Se ha revisado la infraestructura y se ha verificado que el Apache, las instancias de WebLogic y la aplicación se encuentran en buen estado. La URL carga correctamente."</em>
             </div>
 
-            <div class="template-box">
-                <strong>🔄 Reinicio de Servicios / Instancias (Alta Memoria/Swap)</strong><br>
-                <em>"La alerta fue recuperada tras realizar un reinicio ordenado de las instancias/servicios que consumían mayor cantidad de memoria, liberando los recursos asociados y optimizando el uso de swap. Estas acciones estabilizaron el sistema, permitiendo su correcto funcionamiento."</em>
-            </div>
-
-            <div class="template-box">
-                <strong>📬 Metaposta (Atasco de paquetes)</strong><br>
-                <em>"Se revisa la infraestructura de Metaposta y se detectan instancias en estado warning. De manera preventiva, se realiza un reinicio completo de todos los dominios, seguido del reinicio de la aplicación en el servidor correspondiente. Tras el reinicio, los paquetes atascados comienzan a publicarse correctamente. Se confirma: instancias OK, despliegues OK, colas JMS OK y datasources (DS) OK."</em>
-            </div>
-
-            <div class="template-box warning">
-                <strong>📉 Filesystem (Llenado de Logs)</strong><br>
-                <em>"[GERTU_WEB] Se comprimen los logs antiguos que más memoria ocupaban. Estado actual del FS verificado y liberado."</em>
+            <div class="template-box" data-searchable="true">
+                <strong>🔄 Reinicio de Servicios</strong><br>
+                <em>"La alerta fue recuperada tras realizar un reinicio ordenado de las instancias que consumían mayor cantidad de memoria."</em>
             </div>
         </section>
 
@@ -400,51 +526,83 @@ ss -tlnp | grep nginx</code></pre>
             <h2>📚 Referencias: KBs y Contactos</h2>
             
             <h3>👥 Contacto del Equipo</h3>
-            <div class="code-block">
-                <div class="code-header"><span>Emails</span><button class="copy-btn" onclick="copyCode(this)">Copiar</button></div>
-                <pre><code>inaki.hernandez@versia.com
-yeray.martin@versia.com
-sofia.dominguez@versia.com
-pedro.montoya@versia.com
-alejandro.regueira@versia.com
-robertocarlos.soto@versia.com
-marcos.garcia@versia.com
-edgarpinto.matuminy@versia.com
-rakel.perez@versia.com
-manuel.perez@versia.com</code></pre>
+            <div id="emailsList">
+            <div class="code-block" data-searchable="true">
+                <div class="code-header">
+                    <span>Emails</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                </div>
+                <pre><div class="code-line">inaki.hernandez@versia.com<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">yeray.martin@versia.com<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div><div class="code-line">edgarpinto.matuminy@versia.com<button class="copy-line-btn" onclick="copyLine(this)">Copiar</button></div></pre>
+            </div>
             </div>
 
-            <h3>📖 Artículos de Knowledge Base (KB)</h3>
-            <table>
+            <h3>📖 Knowledge Base</h3>
+            <table data-searchable="true">
                 <tr><th>Categoría</th><th>KB ID</th><th>Descripción</th></tr>
                 <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0024300</td><td>Procedimiento de Parcheo</td></tr>
                 <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0019033</td><td>Reinicio de WebLogic</td></tr>
-                <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0022474</td><td>Instancias de PARGI</td></tr>
                 <tr><td><span class="tag tag-apache">Apache</span></td><td>KB0021528</td><td>Pasarelas</td></tr>
-                <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0024345</td><td>Instancias de Metaposta</td></tr>
-                <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0022038</td><td>BO / Metaposta desde zBat</td></tr>
-                <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0011082</td><td>KB general de IIS</td></tr>
-                <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0011476</td><td>Alarma IIS / Host alarma IIS</td></tr>
-                <tr><td><span class="tag tag-sys">Builds</span></td><td>KB0010708</td><td>Errores de AnthillPro Build</td></tr>
-                <tr><td><span class="tag tag-sys">Builds</span></td><td>KB0020556</td><td>Cancelar Builds de AnthillPro</td></tr>
-                <tr><td><span class="tag tag-sys">FS</span></td><td>KB0012024</td><td>Llenado FS</td></tr>
-                <tr><td><span class="tag tag-sys">FS</span></td><td>KB0024385</td><td>LOG --> FS</td></tr>
-                <tr><td><span class="tag tag-sys">JMS</span></td><td>KB0021573</td><td>Reinyectar Mensaje JMS</td></tr>
-                <tr><td><span class="tag tag-sys">Red</span></td><td>KB0024779</td><td>Problemas con XLNETs (ver KB0024644)</td></tr>
-                <tr><td><span class="tag tag-sys">DS</span></td><td>EJLP373</td><td>datasource:connectionInUse.active</td></tr>
+                <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0024345</td><td>Metaposta</td></tr>
             </table>
         </section>
 
         <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--bg-tertiary); color: var(--text-secondary); text-align: center; font-size: 0.9rem;">
-            <p>🔧 DevOps Hub | Comandos Diarios para DevOps/SysAdmin</p>
-            <p>Última actualización: Julio 2026 | Repositorio: github.com/EdgarPintoMatuminy/devops-hub</p>
+            <p> DevOps Hub | Comandos Diarios para DevOps/SysAdmin</p>
+            <p>Última actualización: Julio 2026</p>
         </footer>
 
     </main>
 
-    <!-- Scripts para funcionalidad -->
+    <!-- Modal Añadir Comando -->
+    <div id="addCommandModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>➕ Añadir Nuevo Comando</h2>
+                <button class="modal-close" onclick="closeModal('addCommandModal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Título del Comando:</label>
+                <input type="text" id="cmdTitle" placeholder="ej: Reiniciar Apache">
+            </div>
+            <div class="form-group">
+                <label>Categoría:</label>
+                <select id="cmdCategory">
+                    <option value="apache">Apache</option>
+                    <option value="nginx">Nginx</option>
+                    <option value="tomcat">Tomcat</option>
+                    <option value="weblogic">WebLogic</option>
+                    <option value="general">General</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Comando:</label>
+                <textarea id="cmdContent" placeholder="systemctl restart apache2"></textarea>
+            </div>
+            <button class="btn btn-success" onclick="addCommand()">Guardar Comando</button>
+        </div>
+    </div>
+
+    <!-- Modal Añadir Email -->
+    <div id="addEmailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📧 Añadir Nuevo Email</h2>
+                <button class="modal-close" onclick="closeModal('addEmailModal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" id="newEmail" placeholder="nombre@empresa.com">
+            </div>
+            <div class="form-group">
+                <label>Nombre:</label>
+                <input type="text" id="emailName" placeholder="Nombre Completo">
+            </div>
+            <button class="btn btn-success" onclick="addEmail()">Guardar Email</button>
+        </div>
+    </div>
+
     <script>
-        // 1. Fecha Automática (AAAAMMDD)
+        // Fecha Automática
         document.addEventListener('DOMContentLoaded', () => {
             const now = new Date();
             const yyyy = now.getFullYear();
@@ -452,57 +610,196 @@ manuel.perez@versia.com</code></pre>
             const dd = String(now.getDate()).padStart(2, '0');
             const dateStr = `${yyyy}${mm}${dd}`;
             
-            // Mostrar en el dashboard
-            const display = document.getElementById('current-date-display');
-            if(display) display.textContent = `${dd}/${mm}/${yyyy}`;
-
-            // Rellenar todos los spans con clase 'fecha-auto'
+            document.getElementById('current-date-display').textContent = `${dd}/${mm}/${yyyy}`;
             document.querySelectorAll('.fecha-auto').forEach(el => {
                 el.textContent = dateStr;
             });
+
+            loadCustomData();
         });
 
-        // 2. Función Copiar al Portapapeles
-        function copyCode(button) {
-            const codeBlock = button.parentElement.nextElementSibling;
-            const text = codeBlock.innerText;
+        // Buscador
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const searchableElements = document.querySelectorAll('[data-searchable="true"]');
+            let matchCount = 0;
+
+            searchableElements.forEach(el => {
+                const text = el.textContent.toLowerCase();
+                if (term === '') {
+                    el.style.display = '';
+                    el.innerHTML = el.innerHTML.replace(/<span class="search-match">|<\/span>/g, '');
+                } else if (text.includes(term)) {
+                    el.style.display = '';
+                    highlightText(el, term);
+                    matchCount++;
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+
+            document.getElementById('searchStats').textContent = 
+                term ? `${matchCount} resultado(s) encontrado(s)` : '';
+        });
+
+        function highlightText(element, term) {
+            const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+            const nodes = [];
+            while(walker.nextNode()) nodes.push(walker.currentNode);
             
-            navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.textContent;
-                button.textContent = '¡Copiado!';
-                button.style.backgroundColor = '#10b981';
-                button.style.color = 'white';
-                
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.backgroundColor = '';
-                    button.style.color = '';
-                }, 2000);
-            }).catch(err => {
-                console.error('Error al copiar:', err);
+            nodes.forEach(node => {
+                if (node.textContent.toLowerCase().includes(term)) {
+                    const span = document.createElement('span');
+                    span.className = 'search-match';
+                    const regex = new RegExp(`(${term})`, 'gi');
+                    const parts = node.textContent.split(regex);
+                    parts.forEach(part => {
+                        if (part.toLowerCase() === term) {
+                            const match = span.cloneNode();
+                            match.textContent = part;
+                            node.parentNode.insertBefore(match, node);
+                        } else {
+                            node.parentNode.insertBefore(document.createTextNode(part), node);
+                        }
+                    });
+                    node.parentNode.removeChild(node);
+                }
             });
         }
 
-        // 3. Resaltar enlace activo en el sidebar al hacer scroll
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-links a');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 60) {
-                    current = section.getAttribute('id');
-                }
+        // Copiar funcionalidad
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block').querySelector('pre');
+            const text = codeBlock.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const original = button.textContent;
+                button.textContent = '¡Copiado!';
+                setTimeout(() => button.textContent = original, 2000);
             });
+        }
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active');
-                }
+        function copyLine(button) {
+            const line = button.parentElement;
+            const text = line.childNodes[0].textContent.trim();
+            navigator.clipboard.writeText(text).then(() => {
+                const original = button.textContent;
+                button.textContent = '✓';
+                setTimeout(() => button.textContent = original, 2000);
             });
-        });
+        }
+
+        // Resaltar/Colorear
+        function highlightBlock(select, id) {
+            const value = select.value;
+            if (!value) return;
+            
+            const block = select.closest('.code-block').querySelector('pre');
+            block.classList.remove('highlight-yellow', 'highlight-green', 'highlight-red', 'highlight-blue');
+            block.classList.add(value);
+            
+            localStorage.setItem(`highlight_${id}`, value);
+        }
+
+        // Modales
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        // Añadir Comando
+        function addCommand() {
+            const title = document.getElementById('cmdTitle').value;
+            const category = document.getElementById('cmdCategory').value;
+            const content = document.getElementById('cmdContent').value;
+            
+            if (!title || !content) {
+                alert('Por favor completa todos los campos');
+                return;
+            }
+
+            const customCommands = JSON.parse(localStorage.getItem('customCommands') || '[]');
+            customCommands.push({ title, category, content, date: new Date().toISOString() });
+            localStorage.setItem('customCommands', JSON.stringify(customCommands));
+            
+            closeModal('addCommandModal');
+            alert('Comando guardado correctamente');
+            loadCustomData();
+        }
+
+        // Añadir Email
+        function addEmail() {
+            const email = document.getElementById('newEmail').value;
+            const name = document.getElementById('emailName').value;
+            
+            if (!email) {
+                alert('Por favor introduce un email');
+                return;
+            }
+
+            const customEmails = JSON.parse(localStorage.getItem('customEmails') || '[]');
+            customEmails.push({ email, name, date: new Date().toISOString() });
+            localStorage.setItem('customEmails', JSON.stringify(customEmails));
+            
+            closeModal('addEmailModal');
+            alert('Email guardado correctamente');
+            loadCustomData();
+        }
+
+        // Cargar datos personalizados
+        function loadCustomData() {
+            // Cargar emails personalizados
+            const customEmails = JSON.parse(localStorage.getItem('customEmails') || '[]');
+            if (customEmails.length > 0) {
+                const container = document.getElementById('emailsList');
+                customEmails.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'code-block';
+                    div.innerHTML = `
+                        <div class="code-header">
+                            <span>${item.name || 'Email'}</span>
+                            <button class="copy-btn" onclick="navigator.clipboard.writeText('${item.email}')">Copiar</button>
+                        </div>
+                        <pre>${item.email}</pre>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        // Exportar datos
+        function exportData() {
+            const data = {
+                customCommands: localStorage.getItem('customCommands'),
+                customEmails: localStorage.getItem('customEmails'),
+                exportDate: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `devops-hub-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+        }
+
+        // Borrar personalizaciones
+        function clearCustomData() {
+            if (confirm('¿Estás seguro de borrar todos tus comandos y emails personalizados?')) {
+                localStorage.removeItem('customCommands');
+                localStorage.removeItem('customEmails');
+                location.reload();
+            }
+        }
+
+        // Cerrar modal al hacer click fuera
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
     </script>
 </body>
 </html>
