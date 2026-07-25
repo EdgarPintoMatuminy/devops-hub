@@ -17,14 +17,10 @@
             --warning: #f59e0b;
             --danger: #ef4444;
             --code-bg: #0d1117;
-            --highlight-yellow: rgba(245, 158, 11, 0.25);
-            --highlight-green: rgba(16, 185, 129, 0.25);
-            --highlight-red: rgba(239, 68, 68, 0.25);
-            --highlight-blue: rgba(59, 130, 246, 0.25);
         }
         
-        /* Modo Diurno (Light) */
-        [data-theme="light"] {
+        /* ===== MODO CLARO (NUEVO) ===== */
+        body.light-mode {
             --bg-primary: #f8fafc;
             --bg-secondary: #ffffff;
             --bg-tertiary: #e2e8f0;
@@ -32,12 +28,21 @@
             --text-secondary: #475569;
             --accent: #2563eb;
             --accent-hover: #1d4ed8;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #dc2626;
             --code-bg: #1e293b;
-            --highlight-yellow: rgba(245, 158, 11, 0.35);
-            --highlight-green: rgba(16, 185, 129, 0.35);
-            --highlight-red: rgba(239, 68, 68, 0.35);
-            --highlight-blue: rgba(59, 130, 246, 0.35);
         }
+        body.light-mode .sidebar { background-color: #f1f5f9; border-right: 1px solid #cbd5e1; }
+        body.light-mode .copy-btn { background-color: #f1f5f9; border: 1px solid #cbd5e1; color: #0f172a; }
+        body.light-mode .inline-code { background-color: #f1f5f9; color: #d97706; }
+        body.light-mode pre { color: #f1f5f9; }
+        body.light-mode table { background-color: #ffffff; }
+        body.light-mode th { background-color: #e2e8f0; color: #0f172a; }
+        body.light-mode td { color: #475569; }
+        body.light-mode .template-box { background-color: rgba(37, 99, 235, 0.08); }
+        body.light-mode .template-box.warning { background-color: rgba(217, 119, 6, 0.08); }
+        body.light-mode .template-box.success { background-color: rgba(5, 150, 105, 0.08); }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -48,7 +53,7 @@
             display: flex;
             transition: background-color 0.3s, color 0.3s;
         }
-        
+        /* Sidebar Navigation */
         .sidebar {
             width: 280px;
             background-color: var(--bg-secondary);
@@ -57,7 +62,7 @@
             overflow-y: auto;
             padding: 20px;
             border-right: 1px solid var(--bg-tertiary);
-            transition: background-color 0.3s, border-color 0.3s;
+            transition: background-color 0.3s;
         }
         .sidebar h2 {
             font-size: 1.2rem;
@@ -86,6 +91,7 @@
             background-color: var(--accent);
             color: white;
         }
+        /* Main Content */
         .main-content {
             margin-left: 280px;
             padding: 40px;
@@ -97,6 +103,7 @@
         h3 { font-size: 1.3rem; margin-top: 25px; margin-bottom: 15px; color: var(--text-primary); }
         p { margin-bottom: 15px; color: var(--text-secondary); }
         
+        /* Code Blocks */
         .code-block {
             position: relative;
             background-color: var(--code-bg);
@@ -104,6 +111,7 @@
             border-radius: 8px;
             margin: 15px 0;
             overflow: hidden;
+            transition: all 0.3s;
         }
         .code-header {
             background-color: var(--bg-tertiary);
@@ -114,7 +122,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 10px;
-            transition: background-color 0.3s, color 0.3s;
+            flex-wrap: wrap;
         }
         .copy-btn {
             background-color: var(--bg-secondary);
@@ -126,7 +134,7 @@
             font-size: 0.8rem;
             transition: background 0.2s;
         }
-        .copy-btn:hover { background-color: var(--accent); color: white; }
+        .copy-btn:hover { background-color: var(--accent); }
         pre {
             padding: 15px;
             overflow-x: auto;
@@ -144,6 +152,7 @@
             color: var(--warning);
         }
 
+        /* Tables */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -158,8 +167,9 @@
             border-bottom: 1px solid var(--bg-tertiary);
         }
         th { background-color: var(--bg-tertiary); color: var(--text-primary); }
-        tr:hover { background-color: rgba(128,128,128,0.05); }
+        tr:hover { background-color: rgba(255,255,255,0.02); }
 
+        /* Alerts / Templates */
         .template-box {
             background-color: rgba(59, 130, 246, 0.1);
             border-left: 4px solid var(--accent);
@@ -176,6 +186,7 @@
             border-left-color: var(--success);
         }
 
+        /* Tags */
         .tag {
             display: inline-block;
             padding: 2px 8px;
@@ -189,107 +200,43 @@
         .tag-sys { background-color: #2563eb; color: white; }
         .tag-oid { background-color: #7c3aed; color: white; }
 
-        @media (max-width: 768px) {
-            .sidebar { width: 100%; height: auto; position: relative; }
-            .main-content { margin-left: 0; padding: 20px; }
-            body { flex-direction: column; }
-        }
-
-        /* Buscador */
-        .search-bar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: var(--bg-primary);
-            padding: 15px 0;
-            border-bottom: 2px solid var(--bg-tertiary);
-            margin-bottom: 20px;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-        .search-wrapper {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .search-input {
-            flex: 1;
-            padding: 12px 20px;
-            background: var(--bg-secondary);
-            border: 2px solid var(--bg-tertiary);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-        }
-        .search-input:focus { outline: none; border-color: var(--accent); }
-        .search-stats {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            min-width: 120px;
-            text-align: right;
-        }
-        .search-match {
-            background-color: #fbbf24;
-            color: #000;
-            padding: 2px 4px;
-            border-radius: 3px;
-            font-weight: bold;
-        }
-        .hidden-by-search { display: none !important; }
-
-        /* Botones de acción */
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-        .btn {
-            padding: 10px 18px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .btn-primary { background: var(--accent); color: white; }
-        .btn-primary:hover { background: var(--accent-hover); }
-        .btn-success { background: var(--success); color: white; }
-        .btn-success:hover { background: #059669; }
-        .btn-warning { background: var(--warning); color: #000; }
-        .btn-warning:hover { background: #d97706; }
-        .btn-danger { background: var(--danger); color: white; }
-        .btn-danger:hover { background: #dc2626; }
-
-        /* Toggle de tema */
+        /* ===== NUEVOS ESTILOS ===== */
+        
+        /* Botón modo claro/oscuro */
         .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 200;
-            background: var(--bg-secondary);
-            border: 2px solid var(--bg-tertiary);
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 6px;
             color: var(--text-primary);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
             cursor: pointer;
-            font-size: 1.5rem;
+            font-size: 0.9rem;
+            width: 100%;
+            text-align: center;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transition: all 0.3s;
+            gap: 8px;
         }
-        .theme-toggle:hover {
-            transform: scale(1.1) rotate(15deg);
-            border-color: var(--accent);
+        .theme-toggle:hover { background: var(--accent); color: white; }
+        
+        /* Selector de colores en code blocks */
+        .highlight-selector {
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--bg-secondary);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 0.8rem;
         }
-
+        .highlight-yellow { background-color: rgba(245, 158, 11, 0.2) !important; border-left: 4px solid var(--warning) !important; }
+        .highlight-green { background-color: rgba(16, 185, 129, 0.2) !important; border-left: 4px solid var(--success) !important; }
+        .highlight-red { background-color: rgba(239, 68, 68, 0.2) !important; border-left: 4px solid var(--danger) !important; }
+        .highlight-blue { background-color: rgba(59, 130, 246, 0.2) !important; border-left: 4px solid var(--accent) !important; }
+        
         /* Copiar por línea */
         .code-line {
             display: flex;
@@ -297,7 +244,7 @@
             align-items: center;
             padding: 2px 0;
         }
-        .code-line:hover { background: rgba(128,128,128,0.05); }
+        .code-line:hover { background: rgba(255,255,255,0.03); }
         .copy-line-btn {
             background: transparent;
             border: 1px solid var(--bg-tertiary);
@@ -312,138 +259,42 @@
         }
         .code-line:hover .copy-line-btn { opacity: 1; }
         .copy-line-btn:hover { background: var(--accent); color: white; }
-
-        /* Selector de colores */
-        .highlight-selector {
-            padding: 4px 8px;
-            border-radius: 4px;
-            border: 1px solid var(--bg-secondary);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-        .highlight-yellow { background-color: var(--highlight-yellow) !important; border-left: 3px solid var(--warning); }
-        .highlight-green { background-color: var(--highlight-green) !important; border-left: 3px solid var(--success); }
-        .highlight-red { background-color: var(--highlight-red) !important; border-left: 3px solid var(--danger); }
-        .highlight-blue { background-color: var(--highlight-blue) !important; border-left: 3px solid var(--accent); }
-
-        /* Modales */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal.active { display: flex; }
-        .modal-content {
-            background: var(--bg-secondary);
-            padding: 30px;
-            border-radius: 12px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 85vh;
-            overflow-y: auto;
-            border: 1px solid var(--bg-tertiary);
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        
+        /* Buscador */
+        .search-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-primary);
+            padding: 15px 0;
+            border-bottom: 2px solid var(--bg-tertiary);
             margin-bottom: 20px;
-            border-bottom: 1px solid var(--bg-tertiary);
-            padding-bottom: 15px;
+            transition: background-color 0.3s;
         }
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.8rem;
-            cursor: pointer;
-            line-height: 1;
-        }
-        .modal-close:hover { color: var(--danger); }
-        .form-group { margin-bottom: 15px; }
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--bg-tertiary);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-family: inherit;
-        }
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-        .form-group textarea {
-            min-height: 100px;
-            font-family: monospace;
-            resize: vertical;
-        }
-
-        /* Sección personalizado */
-        .custom-section {
-            background: var(--bg-secondary);
-            border: 1px solid var(--accent);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 20px;
-        }
-        .custom-section h3 {
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
-        .custom-item {
-            background: var(--bg-tertiary);
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 10px;
-        }
-        .custom-item pre {
+        .search-wrapper { display: flex; gap: 10px; align-items: center; }
+        .search-input {
             flex: 1;
-            font-family: monospace;
-            font-size: 0.9rem;
-            color: var(--warning);
-            white-space: pre-wrap;
-            word-break: break-all;
-            margin: 0;
+            padding: 12px 20px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--bg-tertiary);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
         }
-        .delete-btn {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 4px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            flex-shrink: 0;
+        .search-input:focus { outline: none; border-color: var(--accent); }
+        .search-stats { color: var(--text-secondary); font-size: 0.9rem; min-width: 120px; text-align: right; }
+        .search-match { background-color: #fbbf24; color: #000; padding: 2px 4px; border-radius: 3px; font-weight: bold; }
+        .hidden-by-search { display: none !important; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .main-content { margin-left: 0; padding: 20px; }
+            body { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-
-    <!-- ===== NUEVO: Botón de Tema (Nocturno/Diurno) ===== -->
-    <button class="theme-toggle" id="themeToggle" title="Cambiar tema (Nocturno/Diurno)">🌙</button>
 
     <!-- Sidebar Navigation -->
     <nav class="sidebar">
@@ -453,30 +304,28 @@
             <li><a href="#limpieza">🧹 Limpieza Automática</a></li>
             <li><a href="#apache">🔴 Apache (Legacy/Batera)</a></li>
             <li><a href="#weblogic">🌐 WebLogic & Parcheo</a></li>
+            <li><a href="#oid-justicia">⚖️ OID Justicia</a></li>
             <li><a href="#tomcat-nginx">⚡ Tomcat & Nginx</a></li>
             <li><a href="#plantillas">📋 Plantillas de INC</a></li>
             <li><a href="#referencias">📚 KBs y Contactos</a></li>
-            <li><a href="#personalizado">⭐ Mis Añadidos</a></li>
         </ul>
+        
+        <!-- NUEVO: Botón Modo Claro/Oscuro -->
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+            <span id="themeIcon">🌙</span>
+            <span id="themeText">Modo Claro</span>
+        </button>
     </nav>
 
     <!-- Main Content -->
     <main class="main-content">
         
-        <!-- Barra de Búsqueda -->
+        <!-- NUEVO: Buscador -->
         <div class="search-bar">
             <div class="search-wrapper">
-                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar cualquier palabra... (ej: apache, ssl, weblogic, healthcheck)">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar comandos, palabras clave... (ej: apache, ssl, oid)">
                 <span class="search-stats" id="searchStats"></span>
             </div>
-        </div>
-
-        <!-- Botones de Acción -->
-        <div class="action-buttons">
-            <button class="btn btn-primary" onclick="openModal('addCommandModal')">➕ Añadir Comando</button>
-            <button class="btn btn-success" onclick="openModal('addEmailModal')">📧 Añadir Email</button>
-            <button class="btn btn-warning" onclick="exportData()">💾 Exportar Cambios</button>
-            <button class="btn btn-danger" onclick="clearCustomData()">🗑️ Borrar Personalizaciones</button>
         </div>
         
         <section id="inicio" data-searchable="true">
@@ -496,13 +345,13 @@
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">⚫ Original</option>
-                            <option value="highlight-yellow">⚠️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
                         </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
                     </div>
                 </div>
                 <pre><code># Renombrado de temporales con fecha automática
@@ -521,13 +370,13 @@ find . -name "*.tmp" -mtime +2 -exec gzip {} \;</code></pre>
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">⚫ Original</option>
-                            <option value="highlight-yellow">⚠️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
                         </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
                     </div>
                 </div>
                 <pre><code># Entorno Apache
@@ -560,13 +409,13 @@ chown -R webl11:weblogic /serapp/Vaplic/s87a
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">⚫ Original</option>
-                            <option value="highlight-yellow">⚠️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
                         </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
                     </div>
                 </div>
                 <pre><code># Buscar configuración específica
@@ -590,13 +439,13 @@ cat /etc/httpd/conf.extra/proxies/pre.batera.eustat.eus_8443_balancer.conf</code
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">⚫ Original</option>
-                            <option value="highlight-yellow">⚠️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
                         </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
                     </div>
                 </div>
                 <pre><code># Ver fechas y dominio del certificado
@@ -613,13 +462,13 @@ openssl s_client -connect www9.osasuna.jakina.ejgvdns:8443 -servername www9.osas
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">⚫ Original</option>
-                            <option value="highlight-yellow">⚠️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
                         </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
                     </div>
                 </div>
                 <pre><code># Resolución DNS
@@ -646,13 +495,13 @@ nc -zv 10.200.128.14 8443</code></pre>
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">⚫ Original</option>
-                            <option value="highlight-yellow">⚠️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
                         </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
                     </div>
                 </div>
                 <pre><code># 1. Backup: Realizar snapshot de la máquina virtual (Manual)
@@ -685,13 +534,13 @@ sudo systemctl start nodemanager
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">⚫ Original</option>
-                            <option value="highlight-yellow">⚠️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
                         </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
                     </div>
                 </div>
                 <pre><code># Start/Stop Admin Server
@@ -708,6 +557,174 @@ tail -f $DOMAIN_HOME/servers/AdminServer/logs/AdminServer.log</code></pre>
             </div>
         </section>
 
+        <!-- NUEVO: SECCIÓN OID JUSTICIA (KB0030126) -->
+        <section id="oid-justicia" data-searchable="true">
+            <h2>⚖️ OID Justicia <span class="tag tag-oid">KB0030126</span></h2>
+            <p>Comandos para la administración del <strong>Oracle Internet Directory (OID)</strong> en el entorno de Justicia. OID gestiona la autenticación LDAP de los servicios.</p>
+            
+            <div class="template-box warning">
+                <strong>⚠️ Nota:</strong> Ejecutar siempre como usuario <span class="inline-code">oracle</span> o el usuario propietario del <span class="inline-code">ORACLE_HOME</span> del OID. Verificar variables de entorno (<span class="inline-code">ORACLE_HOME</span>, <span class="inline-code">ORACLE_SID</span>) antes de ejecutar.
+            </div>
+
+            <h3>🔍 Verificación de Estado (OPMN)</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this)">
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                </div>
+                <pre><code># Ver estado de todos los procesos OID
+$ORACLE_HOME/opmn/bin/opmnctl status
+
+# Ver estado detallado (con PIDs)
+$ORACLE_HOME/opmn/bin/opmnctl status -l
+
+# Ver logs de OPMN
+tail -f $ORACLE_HOME/opmn/logs/opmn.log
+
+# Ver proceso OIDLDAPD específico
+ps -ef | grep oidldapd | grep -v grep</code></pre>
+            </div>
+
+            <h3>🚀 Arranque de OID</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Bash - Arranque</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this)">
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                </div>
+                <pre><code># 1. Arrancar el monitor OID (oidmon) - OBLIGATORIO primero
+oidmon connect=<DB_SID> start
+
+# 2. Arrancar el servidor LDAP OID (oidldapd) - instancia 0
+oidctl connect=<DB_SID> server=oidldapd configset=0 instance=1 start
+
+# 3. Arrancar todos los procesos gestionados por OPMN
+$ORACLE_HOME/opmn/bin/opmnctl startall
+
+# 4. Verificar que todo está UP
+$ORACLE_HOME/opmn/bin/opmnctl status
+
+# Alternativa: Arranque completo en un solo paso (si OPMN gestiona todo)
+$ORACLE_HOME/opmn/bin/opmnctl start proc=OID</code></pre>
+            </div>
+
+            <h3>🛑 Parada de OID</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Bash - Parada</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this)">
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                </div>
+                <pre><code># 1. Parar procesos OPMN (parada limpia y ordenada)
+$ORACLE_HOME/opmn/bin/opmnctl stopall
+
+# 2. Parar servidor LDAP OID (oidldapd)
+oidctl connect=<DB_SID> server=oidldapd configset=0 instance=1 stop
+
+# 3. Parar el monitor OID (oidmon) - OBLIGATORIO al final
+oidmon connect=<DB_SID> stop
+
+# Verificar que no quedan procesos vivos
+ps -ef | grep -E "oidmon|oidldapd|oidrepld" | grep -v grep</code></pre>
+            </div>
+
+            <h3>🔄 Reinicio Completo</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this)">
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                </div>
+                <pre><code># Secuencia correcta de reinicio (parada + arranque)
+$ORACLE_HOME/opmn/bin/opmnctl stopall
+oidctl connect=<DB_SID> server=oidldapd configset=0 instance=1 stop
+oidmon connect=<DB_SID> stop
+
+# Esperar 5 segundos
+sleep 5
+
+oidmon connect=<DB_SID> start
+oidctl connect=<DB_SID> server=oidldapd configset=0 instance=1 start
+$ORACLE_HOME/opmn/bin/opmnctl startall
+
+# Verificación final
+$ORACLE_HOME/opmn/bin/opmnctl status</code></pre>
+            </div>
+
+            <h3>🔎 Comprobación de Conectividad LDAP</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span>Bash</span>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this)">
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                </div>
+                <pre><code># Comprobar que el puerto LDAP responde (389 no SSL / 636 SSL)
+nc -zv localhost 389
+nc -zv localhost 636
+
+# Búsqueda de prueba con ldapbind
+$ORACLE_HOME/bin/ldapbind -h localhost -p 389 -D "cn=orcladmin" -w <password>
+
+# Búsqueda de prueba con ldapsearch
+$ORACLE_HOME/bin/ldapsearch -h localhost -p 389 -D "cn=orcladmin" -w <password> -b "dc=justicia,dc=eus" "(objectclass=*)"
+
+# Ver logs específicos OID
+tail -f $ORACLE_HOME/ldap/log/oidldapd01.log*
+tail -f $ORACLE_HOME/ldap/log/oidmon.log
+tail -f $ORACLE_HOME/ldap/log/oidrepld*.log</code></pre>
+            </div>
+
+            <h3>🩺 Troubleshooting OID Justicia</h3>
+            <table>
+                <tr><th>Síntoma</th><th>Comprobación</th><th>Acción</th></tr>
+                <tr><td>OID no arranca</td><td><span class="inline-code">opmnctl status</span></td><td>Revisar logs en <span class="inline-code">$ORACLE_HOME/opmn/logs/</span></td></tr>
+                <tr><td>No conecta por LDAP</td><td><span class="inline-code">nc -zv localhost 389</span></td><td>Verificar oidmon y oidldapd activos</td></tr>
+                <tr><td>Error ORA- en logs</td><td><span class="inline-code">sqlplus / as sysdba</span></td><td>Comprobar que la BBDD del OID está UP</td></tr>
+                <tr><td>Alta CPU oidldapd</td><td><span class="inline-code">top -p $(pgrep oidldapd)</span></td><td>Revisar queries LDAP pesadas</td></tr>
+            </table>
+        </section>
+
         <section id="tomcat-nginx" data-searchable="true">
             <h2>⚡ Tomcat & Nginx (Resumen)</h2>
             
@@ -717,13 +734,13 @@ tail -f $DOMAIN_HOME/servers/AdminServer/logs/AdminServer.log</code></pre>
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">⚫ Original</option>
-                            <option value="highlight-yellow">⚠️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
                         </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
                     </div>
                 </div>
                 <pre><code># Start / Stop
@@ -744,13 +761,13 @@ cp app.war $CATALINA_HOME/webapps/</code></pre>
                     <span>Bash</span>
                     <div>
                         <select class="highlight-selector" onchange="highlightBlock(this)">
-                            <option value="">⚫ Original</option>
-                            <option value="highlight-yellow">⚠️ Importante</option>
-                            <option value="highlight-green">✅ Seguro</option>
-                            <option value="highlight-red">🔴 Peligro</option>
-                            <option value="highlight-blue">ℹ️ Info</option>
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
                         </select>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
                     </div>
                 </div>
                 <pre><code># Syntax check & Reload
@@ -792,10 +809,19 @@ ss -tlnp | grep nginx</code></pre>
             <h2>📚 Referencias: KBs y Contactos</h2>
             
             <h3>👥 Contacto del Equipo</h3>
-            <div class="code-block" id="defaultEmailsBlock">
+            <div class="code-block">
                 <div class="code-header">
                     <span>Emails</span>
-                    <button class="copy-btn" onclick="copyCode(this)">Copiar Todo</button>
+                    <div>
+                        <select class="highlight-selector" onchange="highlightBlock(this)">
+                            <option value="reset">🖤 Color original</option>
+                            <option value="yellow">⚠️ Importante</option>
+                            <option value="green">✅ Seguro</option>
+                            <option value="red">🔴 Peligro</option>
+                            <option value="blue">ℹ️ Info</option>
+                        </select>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
                 </div>
                 <pre><code>inaki.hernandez@versia.com
 yeray.martin@versia.com
@@ -812,11 +838,11 @@ manuel.perez@versia.com</code></pre>
             <h3>📖 Artículos de Knowledge Base (KB)</h3>
             <table>
                 <tr><th>Categoría</th><th>KB ID</th><th>Descripción</th></tr>
+                <tr><td><span class="tag tag-oid">OID</span></td><td>KB0030126</td><td>Parada/Arranque OID Justicia</td></tr>
                 <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0024300</td><td>Procedimiento de Parcheo</td></tr>
                 <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0019033</td><td>Reinicio de WebLogic</td></tr>
                 <tr><td><span class="tag tag-wl">WebLogic</span></td><td>KB0022474</td><td>Instancias de PARGI</td></tr>
                 <tr><td><span class="tag tag-apache">Apache</span></td><td>KB0021528</td><td>Pasarelas</td></tr>
-                <tr><td><span class="tag tag-oid">OID</span></td><td>KB0030126</td><td>Comandos para parar/arrancar el OID de justicia</td></tr>
                 <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0024345</td><td>Instancias de Metaposta</td></tr>
                 <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0022038</td><td>BO / Metaposta desde zBat</td></tr>
                 <tr><td><span class="tag tag-sys">Sistema</span></td><td>KB0011082</td><td>KB general de IIS</td></tr>
@@ -831,12 +857,6 @@ manuel.perez@versia.com</code></pre>
             </table>
         </section>
 
-        <section id="personalizado" data-searchable="true">
-            <h2>⭐ Mi Contenido Personalizado</h2>
-            <div id="customCommandsContainer"></div>
-            <div id="customEmailsContainer"></div>
-        </section>
-
         <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--bg-tertiary); color: var(--text-secondary); text-align: center; font-size: 0.9rem;">
             <p>🔧 DevOps Hub | Comandos Diarios para DevOps/SysAdmin</p>
             <p>Última actualización: Julio 2026 | Repositorio: github.com/EdgarPintoMatuminy/devops-hub</p>
@@ -844,82 +864,9 @@ manuel.perez@versia.com</code></pre>
 
     </main>
 
-    <!-- Modales -->
-    <div id="addCommandModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>➕ Añadir Nuevo Comando</h2>
-                <button class="modal-close" onclick="closeModal('addCommandModal')">&times;</button>
-            </div>
-            <div class="form-group">
-                <label>Título del Comando:</label>
-                <input type="text" id="cmdTitle" placeholder="ej: Reiniciar Apache">
-            </div>
-            <div class="form-group">
-                <label>Categoría:</label>
-                <select id="cmdCategory">
-                    <option value="apache">Apache</option>
-                    <option value="nginx">Nginx</option>
-                    <option value="tomcat">Tomcat</option>
-                    <option value="weblogic">WebLogic</option>
-                    <option value="general">General</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Comando (una línea por comando):</label>
-                <textarea id="cmdContent" placeholder="systemctl restart apache2&#10;apachectl configtest"></textarea>
-            </div>
-            <button class="btn btn-success" onclick="addCommand()">💾 Guardar Comando</button>
-        </div>
-    </div>
-
-    <div id="addEmailModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>📧 Añadir Nuevo Email</h2>
-                <button class="modal-close" onclick="closeModal('addEmailModal')">&times;</button>
-            </div>
-            <div class="form-group">
-                <label>Email:</label>
-                <input type="email" id="newEmail" placeholder="nombre@empresa.com">
-            </div>
-            <div class="form-group">
-                <label>Nombre (opcional):</label>
-                <input type="text" id="emailName" placeholder="Nombre Completo">
-            </div>
-            <button class="btn btn-success" onclick="addEmail()">💾 Guardar Email</button>
-        </div>
-    </div>
-
+    <!-- Scripts para funcionalidad -->
     <script>
-        // ========== PERSISTENCIA DE ESTADO ==========
-        
-        // 1. Restaurar tema (nocturno/diurno)
-        (function initTheme() {
-            const savedTheme = localStorage.getItem('devopsTheme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            updateThemeIcon(savedTheme);
-        })();
-
-        function updateThemeIcon(theme) {
-            const btn = document.getElementById('themeToggle');
-            if (btn) btn.textContent = theme === 'dark' ? '🌙' : '☀️';
-        }
-
-        document.getElementById('themeToggle').addEventListener('click', () => {
-            const current = document.documentElement.getAttribute('data-theme');
-            const newTheme = current === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('devopsTheme', newTheme);
-            updateThemeIcon(newTheme);
-        });
-
-        // 2. Guardar posición de scroll antes de recargar
-        window.addEventListener('beforeunload', () => {
-            sessionStorage.setItem('scrollPosition', window.scrollY);
-        });
-
-        // 3. Inicialización al cargar
+        // ===== 1. FECHA AUTOMÁTICA (AAAAMMDD) =====
         document.addEventListener('DOMContentLoaded', () => {
             const now = new Date();
             const yyyy = now.getFullYear();
@@ -934,29 +881,20 @@ manuel.perez@versia.com</code></pre>
                 el.textContent = dateStr;
             });
 
+            // NUEVO: Mejorar bloques para copiar por línea
             enhanceCodeBlocks();
-            renderCustomContent();
+            
+            // NUEVO: Restaurar tema guardado
+            restoreTheme();
+            
+            // NUEVO: Restaurar colores de bloques
             restoreHighlights();
             
-            // Restaurar término de búsqueda guardado
-            const savedSearch = localStorage.getItem('devopsSearch') || '';
-            const searchInput = document.getElementById('searchInput');
-            if (savedSearch && searchInput) {
-                searchInput.value = savedSearch;
-                searchInput.dispatchEvent(new Event('input'));
-            }
-            
-            // Restaurar posición de scroll
-            setTimeout(() => {
-                const savedScroll = sessionStorage.getItem('scrollPosition');
-                if (savedScroll) {
-                    window.scrollTo(0, parseInt(savedScroll));
-                }
-            }, 100);
+            // NUEVO: Restaurar posición de scroll
+            restoreScrollPosition();
         });
 
-        // ========== FUNCIONES ORIGINALES ==========
-
+        // ===== 2. COPIAR BLOQUE COMPLETO =====
         function copyCode(button) {
             const codeBlock = button.closest('.code-block').querySelector('pre');
             const text = codeBlock.innerText;
@@ -972,11 +910,10 @@ manuel.perez@versia.com</code></pre>
                     button.style.backgroundColor = '';
                     button.style.color = '';
                 }, 2000);
-            }).catch(err => {
-                console.error('Error al copiar:', err);
             });
         }
 
+        // ===== 3. SCROLL SPY PARA SIDEBAR =====
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('.nav-links a');
 
@@ -997,11 +934,12 @@ manuel.perez@versia.com</code></pre>
             });
         });
 
-        // ========== MEJORAS AÑADIDAS ==========
+        // ===== NUEVAS FUNCIONALIDADES =====
 
+        // ===== 4. COPIAR POR LÍNEA =====
         function enhanceCodeBlocks() {
             document.querySelectorAll('.code-block pre').forEach(pre => {
-                if (pre.querySelector('.code-line')) return;
+                if (pre.dataset.enhanced === 'true') return;
                 
                 const codeElement = pre.querySelector('code');
                 if (!codeElement) return;
@@ -1036,19 +974,17 @@ manuel.perez@versia.com</code></pre>
                     div.appendChild(btn);
                     codeElement.appendChild(div);
                 });
+                
+                pre.dataset.enhanced = 'true';
             });
         }
 
-        // Buscador con persistencia
+        // ===== 5. BUSCADOR EN TIEMPO REAL =====
         const searchInput = document.getElementById('searchInput');
         const searchStats = document.getElementById('searchStats');
         
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase().trim();
-            
-            // Guardar término en localStorage
-            localStorage.setItem('devopsSearch', e.target.value);
-            
             const searchableElements = document.querySelectorAll('[data-searchable="true"]');
             let matchCount = 0;
 
@@ -1110,185 +1046,85 @@ manuel.perez@versia.com</code></pre>
             });
         }
 
-        // Colorear bloques (con opción de quitar color)
+        // ===== 6. COLOREAR BLOQUES (con opción reset) =====
         function highlightBlock(select) {
             const value = select.value;
-            const pre = select.closest('.code-header').nextElementSibling;
+            const pre = select.closest('.code-block').querySelector('pre');
             
-            // Quitar todos los colores
+            // Quitar todas las clases de highlight
             pre.classList.remove('highlight-yellow', 'highlight-green', 'highlight-red', 'highlight-blue');
             
-            // Aplicar nuevo color si no es "Original"
-            if (value) {
-                pre.classList.add(value);
+            if (value !== 'reset' && value !== '') {
+                pre.classList.add('highlight-' + value);
             }
             
             const blockId = Array.from(document.querySelectorAll('.code-block')).indexOf(select.closest('.code-block'));
-            if (value) {
-                localStorage.setItem(`highlight_block_${blockId}`, value);
-            } else {
-                localStorage.removeItem(`highlight_block_${blockId}`);
-            }
+            localStorage.setItem(`highlight_block_${blockId}`, value);
         }
 
         function restoreHighlights() {
             document.querySelectorAll('.code-block').forEach((block, idx) => {
                 const saved = localStorage.getItem(`highlight_block_${idx}`);
-                if (saved) {
+                if (saved && saved !== 'reset') {
                     const pre = block.querySelector('pre');
-                    if (pre) pre.classList.add(saved);
+                    if (pre) pre.classList.add('highlight-' + saved);
                     const select = block.querySelector('.highlight-selector');
                     if (select) select.value = saved;
+                } else if (saved === 'reset') {
+                    const select = block.querySelector('.highlight-selector');
+                    if (select) select.value = 'reset';
                 }
             });
         }
 
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
+        // ===== 7. MODO CLARO/OSCURO =====
+        function toggleTheme() {
+            const body = document.body;
+            const isLight = body.classList.toggle('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            updateThemeButton();
+        }
+
+        function updateThemeButton() {
+            const isLight = document.body.classList.contains('light-mode');
+            document.getElementById('themeIcon').textContent = isLight ? '☀️' : '🌙';
+            document.getElementById('themeText').textContent = isLight ? 'Modo Oscuro' : 'Modo Claro';
+        }
+
+        function restoreTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
             }
+            updateThemeButton();
         }
 
-        function addCommand() {
-            const title = document.getElementById('cmdTitle').value.trim();
-            const category = document.getElementById('cmdCategory').value;
-            const content = document.getElementById('cmdContent').value.trim();
-            
-            if (!title || !content) {
-                alert('⚠️ Por favor completa título y comando');
-                return;
-            }
+        // ===== 8. PERSISTENCIA DE SCROLL AL HACER F5 =====
+        // Guardar posición de scroll cada 300ms
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                sessionStorage.setItem('scrollPosition', window.scrollY);
+            }, 300);
+        });
 
-            const commands = JSON.parse(localStorage.getItem('customCommands') || '[]');
-            commands.push({ 
-                id: Date.now(),
-                title, 
-                category, 
-                content, 
-                date: new Date().toISOString() 
-            });
-            localStorage.setItem('customCommands', JSON.stringify(commands));
-            
-            closeModal('addCommandModal');
-            document.getElementById('cmdTitle').value = '';
-            document.getElementById('cmdContent').value = '';
-            alert('✅ Comando guardado correctamente');
-            renderCustomContent();
-        }
-
-        function addEmail() {
-            const email = document.getElementById('newEmail').value.trim();
-            const name = document.getElementById('emailName').value.trim();
-            
-            if (!email) {
-                alert('⚠️ Por favor introduce un email');
-                return;
-            }
-
-            const emails = JSON.parse(localStorage.getItem('customEmails') || '[]');
-            emails.push({ 
-                id: Date.now(),
-                email, 
-                name, 
-                date: new Date().toISOString() 
-            });
-            localStorage.setItem('customEmails', JSON.stringify(emails));
-            
-            closeModal('addEmailModal');
-            document.getElementById('newEmail').value = '';
-            document.getElementById('emailName').value = '';
-            alert('✅ Email guardado correctamente');
-            renderCustomContent();
-        }
-
-        function renderCustomContent() {
-            const commands = JSON.parse(localStorage.getItem('customCommands') || '[]');
-            const cmdContainer = document.getElementById('customCommandsContainer');
-            if (commands.length > 0) {
-                cmdContainer.innerHTML = `
-                    <div class="custom-section" data-searchable="true">
-                        <h3>⭐ Mis Comandos Personalizados</h3>
-                        ${commands.map(cmd => `
-                            <div class="custom-item">
-                                <div style="flex:1;">
-                                    <strong style="color:var(--accent);">${cmd.title}</strong>
-                                    <span style="color:var(--text-secondary); font-size:0.8rem;"> [${cmd.category}]</span>
-                                    <pre>${cmd.content}</pre>
-                                </div>
-                                <button class="copy-line-btn" style="opacity:1;" onclick="navigator.clipboard.writeText(\`${cmd.content.replace(/`/g, '\\`')}\`).then(()=>{this.textContent='✓'; setTimeout(()=>this.textContent='Copiar',1500);})">Copiar</button>
-                                <button class="delete-btn" onclick="deleteItem('customCommands', ${cmd.id})">🗑️</button>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            } else {
-                cmdContainer.innerHTML = '<p style="color:var(--text-secondary);">No hay comandos personalizados aún. ¡Añade uno arriba!</p>';
-            }
-
-            const emails = JSON.parse(localStorage.getItem('customEmails') || '[]');
-            const emailContainer = document.getElementById('customEmailsContainer');
-            if (emails.length > 0) {
-                emailContainer.innerHTML = `
-                    <div class="custom-section" data-searchable="true">
-                        <h3>📧 Mis Emails Personalizados</h3>
-                        ${emails.map(em => `
-                            <div class="custom-item">
-                                <div style="flex:1;">
-                                    <strong style="color:var(--accent);">${em.name || 'Contacto'}</strong>
-                                    <pre style="color:var(--success);">${em.email}</pre>
-                                </div>
-                                <button class="copy-line-btn" style="opacity:1;" onclick="navigator.clipboard.writeText('${em.email}').then(()=>{this.textContent='✓'; setTimeout(()=>this.textContent='Copiar',1500);})">Copiar</button>
-                                <button class="delete-btn" onclick="deleteItem('customEmails', ${em.id})">🗑️</button>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            } else {
-                emailContainer.innerHTML = '';
-            }
-        }
-
-        function deleteItem(type, id) {
-            if (!confirm('¿Eliminar este elemento?')) return;
-            const items = JSON.parse(localStorage.getItem(type) || '[]');
-            const filtered = items.filter(item => item.id !== id);
-            localStorage.setItem(type, JSON.stringify(filtered));
-            renderCustomContent();
-        }
-
-        function exportData() {
-            const data = {
-                customCommands: JSON.parse(localStorage.getItem('customCommands') || '[]'),
-                customEmails: JSON.parse(localStorage.getItem('customEmails') || '[]'),
-                exportDate: new Date().toISOString()
-            };
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `devops-hub-backup-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function clearCustomData() {
-            if (confirm('⚠️ ¿Estás seguro de borrar TODOS tus comandos y emails personalizados? Esta acción no se puede deshacer.')) {
-                localStorage.removeItem('customCommands');
-                localStorage.removeItem('customEmails');
-                localStorage.removeItem('devopsSearch');
-                for (let i = 0; i < localStorage.length; i++) {
-                    const key = localStorage.key(i);
-                    if (key && key.startsWith('highlight_block_')) {
-                        localStorage.removeItem(key);
-                    }
+        function restoreScrollPosition() {
+            // Si hay un hash en la URL, ir ahí (prioridad)
+            if (window.location.hash) {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 100);
+                    return;
                 }
-                document.getElementById('searchInput').value = '';
-                document.getElementById('searchStats').textContent = '';
-                document.querySelectorAll('.hidden-by-search').forEach(el => el.classList.remove('hidden-by-search'));
-                renderCustomContent();
-                location.reload();
+            }
+            
+            // Si no, restaurar posición guardada
+            const savedPos = sessionStorage.getItem('scrollPosition');
+            if (savedPos && parseInt(savedPos) > 0) {
+                setTimeout(() => {
+                    window.scrollTo(0, parseInt(savedPos));
+                }, 100);
             }
         }
     </script>
